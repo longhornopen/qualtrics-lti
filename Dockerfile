@@ -1,6 +1,5 @@
-FROM php:7.4-cli as phpbuild
+FROM composer:2.0 as phpbuild
 ADD web /var/www/html
-COPY --from=composer /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 RUN composer install
 

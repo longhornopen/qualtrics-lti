@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @mixin Builder
+ * @mixin Model
+ * @method static firstOrCreate(array $array, string[] $array1)
+ * @method static where(string $string, mixed $get)
  */
 class Assignment extends Model
 {

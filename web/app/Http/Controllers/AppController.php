@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\DB;
 class AppController extends Controller
 {
     public function getTool(Request $request) {
-        if (!$request->session()->has('lti_session_exists')) {
-            return "<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>";
-        }
         $assignment = Assignment::firstOrCreate([
             'resource_link_dbid' => $request->session()->get('lti_resource_link_dbid'),
         ], [
@@ -42,6 +39,10 @@ class AppController extends Controller
             $sep = "?";
         }
         $full_qualtrics_url = $assignment->qualtrics_url . $sep . "return_url=" . urlencode($request->url() . "/response");
+        $share_user = $request->session()->has('lti_person_sourcedid');
+        if ($share_user) {
+            $full_qualtrics_url .= "&sis_user_id=" . $request->session()->get('lti_person_sourcedid');
+        }
 
         return view('tool_student', [
             'assignment' => $assignment,
@@ -51,9 +52,6 @@ class AppController extends Controller
     }
 
     public function getToolResponse(Request $request) {
-        if (!$request->session()->has('lti_session_exists')) {
-            return "<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>";
-        }
         if (!$request->has('Score')) {
             return "ERROR: 'Score' parameter is missing on return URL.";
         }
@@ -62,7 +60,7 @@ class AppController extends Controller
         }
 
         $grade = (float)$request->get('Score') / (float)$request->get('MaxScore');
-        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'),)
+        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
             ->firstOrFail();
         $assignment_response = AssignmentResponse::where('assignment_id',$assignment->id)
             ->where('user_result_id', $request->session()->get('lti_user_result_dbid'))
@@ -91,9 +89,6 @@ class AppController extends Controller
     }
 
     public function postToolConfig(Request $request) {
-        if (!$request->session()->has('lti_session_exists')) {
-            return "<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>";
-        }
         if (!$request->session()->get('lti_is_teacher')) {
             abort(403);
         }
@@ -102,7 +97,7 @@ class AppController extends Controller
             'qualtrics_url' => 'required|url'
         ]);
 
-        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'),)
+        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
             ->firstOrFail();
         $assignment->qualtrics_url = $request->get('qualtrics_url');
         $assignment->intro_text = $request->get('intro_text');
@@ -114,9 +109,6 @@ class AppController extends Controller
 
     public function postResendGrade(Request $request)
     {
-        if (!$request->session()->has('lti_session_exists')) {
-            return "<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>";
-        }
         if (!$request->session()->get('lti_is_teacher')) {
             abort(403);
         }
@@ -143,10 +135,7 @@ class AppController extends Controller
     }
 
     public function getTestBegin(Request $request) {
-        if (!$request->session()->has('lti_session_exists')) {
-            return "<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>";
-        }
-        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'),)
+        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
             ->firstOrFail();
         $sep = "&";
         if (strpos($assignment->qualtrics_url, "?")===FALSE) {
@@ -162,10 +151,7 @@ class AppController extends Controller
     }
 
     public function getTestEnd(Request $request) {
-        if (!$request->session()->has('lti_session_exists')) {
-            return "<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>";
-        }
-        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'),)
+        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
             ->firstOrFail();
 
         return view('tool_test_end', [

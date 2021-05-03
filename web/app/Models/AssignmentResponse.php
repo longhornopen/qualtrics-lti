@@ -9,7 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
- * @mixin Builder
+ * @mixin Model
+ * @method static where(string $string, $id)
+ * @method static firstOrCreate(array $array, array $array1)
+ * @method static findOrFail(mixed $get)
  */
 class AssignmentResponse extends Model
 {

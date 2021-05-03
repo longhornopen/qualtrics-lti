@@ -29,9 +29,9 @@ But for most users, something like this will suffice:
 Coming soon...
 
 ## Usage
-Visit the home page on your installed server for usage instructions.
+When placed in a course, the Qualtrics LTI tool can be configured with the URL of a Qualtrics survey.  Students will be sent to this survey, and Qualtrics will return them to the LTI tool afterwards so that their grade can be recorded.  You'll have to add a survey step to the Qualtrics survey to make that happen.
 
-You may want to use these instructions as a basis for your own institution-specific documentation, telling users where to find your Qualtrics instance, or how to install the tool in a course.
+Visit the home page on your installed server for full usage instructions.  You may want to use these instructions as a basis for your own institution-specific documentation, telling users where to find your Qualtrics instance, or how to install the tool in a course.
 
 ## Meta
 This is a product of Longhorn Open Ed Tech, a group building open-source education tools housed at the University of Texas at Austin. See our homepage for more info about us and to discuss collaboration possibilities and ideas for new development.

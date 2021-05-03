@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AppController;
+use App\Http\Controllers\LtiController;
+use App\Http\Middleware\CheckLtiLogin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,12 +20,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/lti', [App\Http\Controllers\LtiController::class, 'ltiMessage']);
-Route::get('/lti_check', [\App\Http\Controllers\LtiController::class, 'launchCheck']);
-Route::get('/lti_redirect', [\App\Http\Controllers\LtiController::class, 'launchRedirect']);
-Route::get('/app', [\App\Http\Controllers\AppController::class, 'getTool']);
-Route::post('/app/config', [\App\Http\Controllers\AppController::class, 'postToolConfig']);
-Route::get('/app/response', [\App\Http\Controllers\AppController::class, 'getToolResponse']);
-Route::post('/app/resend_grade', [\App\Http\Controllers\AppController::class, 'postResendGrade']);
-Route::get('/app/test_begin', [\App\Http\Controllers\AppController::class, 'getTestBegin']);
-Route::get('/app/test_end', [\App\Http\Controllers\AppController::class, 'getTestEnd']);
+Route::post('/lti', [LtiController::class, 'ltiMessage']);
+Route::get('/lti_check', [LtiController::class, 'launchCheck']);
+Route::get('/lti_redirect', [LtiController::class, 'launchRedirect']);
+
+Route::middleware([CheckLtiLogin::class])->group(function () {
+    Route::get('/app', [AppController::class, 'getTool']);
+    Route::post('/app/config', [AppController::class, 'postToolConfig']);
+    Route::get('/app/response', [AppController::class, 'getToolResponse']);
+    Route::post('/app/resend_grade', [AppController::class, 'postResendGrade']);
+    Route::get('/app/test_begin', [AppController::class, 'getTestBegin']);
+    Route::get('/app/test_end', [AppController::class, 'getTestEnd']);
+});
+
+// Test survey which behaves similarly to a Qualtrics survey, for testing without Qualtrics
+Route::get('/test/survey', function() { return view('dev/test_survey'); });

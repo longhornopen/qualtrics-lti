@@ -14,7 +14,7 @@ A simple LTI tool for integrating Qualtrics surveys into a course.  Surveys can 
 * Start the server.  See the 'Getting Started' section of the Laravel docs (https://laravel.com/docs/8.x/installation) for full details, but there are three easy ways to get started:
     * `php artisan serve` on the command line, which starts a server at http://localhost:8000
     * Install this into an Apache/PHP server, with the 'web/public/' folder as the webroot
-    * Use the included Dockerfile to run this in a Docker setup.
+    * Use the included Dockerfile to run this in a Docker setup.  See https://github.com/orgs/longhornopen/packages/container/package/qualtrics-lti for prebuilt Docker images.
 
 ## Updating
 

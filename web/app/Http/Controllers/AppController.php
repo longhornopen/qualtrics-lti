@@ -29,7 +29,9 @@ class AppController extends Controller
 
         $assignment_response = AssignmentResponse::firstOrCreate([
             'assignment_id' => $assignment->id,
-            'user_result_id' => $request->session()->get('lti_user_result_dbid')
+            'user_result_id' => $request->session()->get('lti_user_result_dbid'),
+            'user_name' => $request->session()->get('lti_user_name'),
+            'user_email' => $request->session()->get('lti_user_email'),
         ], [
 
         ]);

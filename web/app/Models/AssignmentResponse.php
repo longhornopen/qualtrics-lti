@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
  * @method static where(string $string, $id)
  * @method static firstOrCreate(array $array, array $array1)
  * @method static findOrFail(mixed $get)
+ * @property string user_name
+ * @property string user_email
  */
 class AssignmentResponse extends Model
 {
@@ -20,27 +22,22 @@ class AssignmentResponse extends Model
 
     protected $fillable = [
         'assignment_id',
-        'user_result_id'
+        'user_result_id',
+        'user_name',
+        'user_email',
     ];
 
     protected $casts = [
         'date_outcome_reported' => 'datetime'
     ];
 
-    public function getPersonIdentity() {
-        $lti_db_connector = LTI\DataConnector\DataConnector::getDataConnector(DB::connection()->getPdo());
-        $user_result = LTI\UserResult::fromRecordId(
-            $this->user_result_id,
-            $lti_db_connector
-        );
-        if ($user_result->fullname) {
-            return $user_result->fullname;
+    public function getPersonIdentity(): string {
+        if ($this->user_name && $this->user_email) {
+            return $this->user_name . ' (' . $this->user_email . ')';
         }
-        if ($user_result->email) {
-            return $user_result->email;
+        if ($this->user_name) {
+            return $this->user_name;
         }
-        if ($user_result->ltiUserId) {
-            return $user_result->ltiUserId;
-        }
+        return 'anonymous';
     }
 }

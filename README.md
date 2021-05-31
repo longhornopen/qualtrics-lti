@@ -10,10 +10,16 @@ A simple LTI tool for integrating Qualtrics surveys into a course.  Surveys can 
 * `composer install` (to install PHP dependencies that aren't included here)
 * `php artisan key:generate` (to set your app's encryption key)
 * Edit the '.env' file with information about your local environment.  (You can also provide these as environment variables instead, if you wish.)
+* `php artisan migrate` (to create your database schema)
 * Start the server.  See the 'Getting Started' section of the Laravel docs (https://laravel.com/docs/8.x/installation) for full details, but there are three easy ways to get started:
     * `php artisan serve` on the command line, which starts a server at http://localhost:8000
     * Install this into an Apache/PHP server, with the 'web/public/' folder as the webroot
     * Use the included Dockerfile to run this in a Docker setup.
+
+## Updating
+
+When updating to a new version:
+* `cd web`, then run `php artisan migrate` to pick up any database schema changes.
 
 ## LMS Setup
 Full docs about how to generate the info you need to install this tool in an LMS are at https://github.com/longhornopen/laravel-celtic-lti/wiki/LTI-Key-Generation

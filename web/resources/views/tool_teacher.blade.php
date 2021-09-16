@@ -49,6 +49,9 @@
 
     <div class="row">
         <div class="col-md-12">
+            If you haven't already, <a href="/" target="_blank">set up your survey according to the instructions.</a>
+        </div>
+        <div class="col-md-12">
             <form method="post" action="/app/config">
                 {{@csrf_field()}}
                 <div class="form-group">

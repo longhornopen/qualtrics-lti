@@ -7,6 +7,7 @@
     <p><a href="/app"><<< back to editing survey</a></p>
 
     <p>
+        <span style="background-color: lightgreen;border:solid 1px green;border-radius:5px;padding:5px;">✔️OK!</span>
         You've successfully completed your test survey.  Here's the scoring information that I'd be recording
         if this were a real student:
     </p>

@@ -8,8 +8,15 @@
 
     <p>
         We're about to test your survey.  You'll be given a chance to take your survey as your students would see it.
-        Afterwards, you'll be brought back here and be shown the score you got.  You can repeat this test as many times
-        as you like.
+    </p>
+
+    <p>
+        You'll know everything is set up correctly when your survey sends you back to this page and you see the
+        <span style="background-color: lightgreen;border:solid 1px green;border-radius:5px;padding:5px;">✔️OK!</span> mark.
+    </p>
+
+    <p>
+        You can repeat this test as many times as you like.
     </p>
 
     <hr>

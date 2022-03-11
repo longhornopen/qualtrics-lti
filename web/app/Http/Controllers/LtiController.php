@@ -19,18 +19,6 @@ class LtiController extends Controller
         // $tool contains information about the launch - which LMS, course, placement, and user this corresponds to.
         // Store these in your database or session, as appropriate for your app.
         if ($tool->getLaunchType() === $tool::LAUNCH_TYPE_LAUNCH) {
-/*            $launch_data = [
-                'consumer_guid' => $tool->platform->consumerGuid,
-                'context_id' => $tool->context->ltiContextId,
-                'resource_link_id' => $tool->resourceLink->ltiResourceLinkId,
-                'resource_link_title' => $tool->resourceLink->title,
-                'user_id' => $tool->userResult->ltiUserId,
-                'result_sourcedid' => $tool->userResult->ltiResultSourcedId,
-                'course_name' => $tool->context->title,
-                'user_name' => $tool->userResult->fullname,
-                'user_email' => $tool->userResult->email,
-            ];*/
-
             $roles = implode(',', $tool->userResult->roles);
             $isTeacher = strpos($roles, "Instructor") !== FALSE ||
                 strpos($roles, "Faculty") !== FALSE ||

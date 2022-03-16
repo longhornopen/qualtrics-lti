@@ -10,7 +10,7 @@ WORKDIR /var/www/html
 RUN npm install && npm run production && rm -rf /var/www/html/node_modules
 
 
-FROM php:7.4-apache
+FROM php:8.0-apache
 # enable rewrite for Laravel pretty URLs
 RUN a2enmod rewrite
 # change apache webroot from / to /public/

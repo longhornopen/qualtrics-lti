@@ -6,7 +6,7 @@ services:
     volumes:
       - ./web:/var/www/html
     environment:
-      VIRTUAL_HOST: qualtrics-lti.docker
+      VIRTUAL_HOST: ${VIRTUAL_HOST:-qualtrics-lti.docker}
       DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: 3306

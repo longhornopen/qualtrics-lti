@@ -10,35 +10,8 @@
     <script src="{{ asset('/js/manifest.js') }}"></script>
     <script src="{{ asset('/js/vendor.js') }}"></script>
     <script src="{{ asset('/js/app.js') }}"></script>
-
-    <style>
-        .header {
-            padding:10px;
-            color:white;
-            background-color:#BF5700;
-        }
-        .footer {
-            padding:10px;
-            color:white;
-            background-color:#BF5700;
-            margin-top:10px;
-        }
-        .card_instructions {
-            margin-top:10px;
-            margin-bottom:10px;
-        }
-        .card_instructions .card-title {
-            background-color: #cccccc;
-            padding:5px;
-        }
-        a#provided_link, a:hover#provided_link {
-            color: white;
-            font-size:120%;
-            text-decoration: underline;
-        }
-    </style>
 </head>
-<body>
+<body class="page_home">
 
 <div class="container">
 
@@ -127,9 +100,11 @@
 
     </div><!-- Row -->
 
+    @if (!env('APP_HIDE_LONGHORNOPEN_BRANDING'))
     <div class="row footer">
         <div class="float-right">Provided by <a id="provided_link" href="https://longhornopen.github.io/"><img height="40" src="/img/longhorn_open_logo.svg"> Longhorn Open</a></div>
     </div>
+    @endif
 </div>
 
 

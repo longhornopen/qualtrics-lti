@@ -6,3 +6,34 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.page_home {
+    .header {
+        padding: 10px;
+        color: white;
+        background-color: #BF5700;
+    }
+
+    .card_instructions {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .card_instructions .card-title {
+        background-color: #cccccc;
+        padding: 5px;
+    }
+
+    .footer {
+        padding: 10px;
+        color: white;
+        background-color: #BF5700;
+        margin-top: 10px;
+
+        a#provided_link, a:hover#provided_link {
+            color: white;
+            font-size: 120%;
+            text-decoration: underline;
+        }
+    }
+}

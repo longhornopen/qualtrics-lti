@@ -74,7 +74,7 @@ setTimeout(deactivate, 4 * 60 * 1000);
 <a href="/lti_redirect?id=$id" target="_blank">Click here</a> to load this tool.
 </div>
 <div id='message_div' style='text-align:center;font-family:sans-serif;font-size:200%;display:none;'>
-Please reload this page in Canvas to launch this tool.
+Please reload this page in your LMS to launch this tool.
 </div>
 </body></html>
 TAG;

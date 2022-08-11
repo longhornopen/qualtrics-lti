@@ -8,6 +8,7 @@ use ceLTIc\LTI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use LonghornOpen\LaravelCelticLTI\LtiTool;
 
 class AppController extends Controller
 {
@@ -71,13 +72,10 @@ class AppController extends Controller
         $assignment_response->score = $grade;
         $assignment_response->save();
 
-        $lti_db_connector = LTI\DataConnector\DataConnector::getDataConnector(DB::connection()->getPdo());
-        $resourceLink = LTI\ResourceLink::fromRecordId($request->session()->get('lti_resource_link_dbid'), $lti_db_connector);
+        $lti_tool = LtiTool::getLtiTool();
+        $resourceLink = $lti_tool->getResourceLinkById($request->session()->get('lti_resource_link_dbid'));
         if ($resourceLink->hasOutcomesService()) {
-            $user_result = LTI\UserResult::fromRecordId(
-                $request->session()->get('lti_user_result_dbid'),
-                $lti_db_connector
-            );
+            $user_result = $lti_tool->getUserResultById($request->session()->get('lti_user_result_dbid'));
             $outcome = new LTI\Outcome($grade);
             $ok = $resourceLink->doOutcomesService(LTI\ResourceLink::EXT_WRITE, $outcome, $user_result);
             if (!$ok) {
@@ -117,19 +115,18 @@ class AppController extends Controller
 
         $assignment_response = AssignmentResponse::findOrFail($request->get('response_id'));
 
-        $lti_db_connector = LTI\DataConnector\DataConnector::getDataConnector(DB::connection()->getPdo());
-        $resourceLink = LTI\ResourceLink::fromRecordId($request->session()->get('lti_resource_link_dbid'), $lti_db_connector);
+        $grade = $assignment_response->score;
+        $lti_tool = LtiTool::getLtiTool();
+        $resourceLink = $lti_tool->getResourceLinkById($request->session()->get('lti_resource_link_dbid'));
         if ($resourceLink->hasOutcomesService()) {
-            $user_result = LTI\UserResult::fromRecordId(
-                $assignment_response->user_result_id,
-                $lti_db_connector
-            );
-            $outcome = new LTI\Outcome($assignment_response->score);
+            $user_result = $lti_tool->getUserResultById($request->session()->get('lti_user_result_dbid'));
+            $outcome = new LTI\Outcome($grade);
             $ok = $resourceLink->doOutcomesService(LTI\ResourceLink::EXT_WRITE, $outcome, $user_result);
             if (!$ok) {
-                return "<html><body><h3>ERROR: Unable to upload grade.  Please try again later.</h3></body></html>";
+                return "<html><body><h3>ERROR: Unable to save grade.  Please notify your instructor.</h3></body></html>";
             }
         }
+
         $assignment_response->date_outcome_reported = new Carbon();
         $assignment_response->save();
 

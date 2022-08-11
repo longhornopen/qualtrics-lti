@@ -11,7 +11,7 @@ class LtiController extends Controller
 {
     public function ltiMessage(Request $request)
     {
-        $tool = new LtiTool();
+        $tool = LtiTool::getLtiTool();
         $tool->handleRequest();
 
         $session_data = [];
@@ -41,6 +41,12 @@ class LtiController extends Controller
         Cache::put('sess'.$uuid, $request->session()->getId(), 300);
 
         return redirect('/lti_check?id='.$uuid);
+    }
+
+    public function getJWKS()
+    {
+        $tool = LtiTool::getLtiTool();
+        return $tool->getJWKS();
     }
 
     /**

@@ -32,7 +32,10 @@ But for most users, something like this will suffice:
 * Install into LMS with launch URL: `{YOUR_SERVER_URL}/lti` and the consumer key/secret you created above.
 
 ### LTI 1.3
-Coming soon...
+* `cd web`
+* Check the contents of config/lti.php and see if you need to supply or change any environment variables.
+* Use the link in 'LMS Setup' above if you need help creating an installation for this tool in your LMS.
+* `php artisan lti:add_platform_1.3` to get instructions on how to create a registration for the tool once it's installed.
 
 ## Usage
 When placed in a course, the Qualtrics LTI tool can be configured with the URL of a Qualtrics survey.  Students will be sent to this survey, and Qualtrics will return them to the LTI tool afterwards so that their grade can be recorded.  You'll have to add a survey step to the Qualtrics survey to make that happen.

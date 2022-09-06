@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::post('/lti', [LtiController::class, 'ltiMessage']);
+Route::get('/lti/help', [LtiController::class, 'ltiHelp']);
 Route::get('/lti/jwks', [LtiController::class, 'getJWKS']);
 Route::get('/lti_check', [LtiController::class, 'launchCheck']);
 Route::get('/lti_redirect', [LtiController::class, 'launchRedirect']);

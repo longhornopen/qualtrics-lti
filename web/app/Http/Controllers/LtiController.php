@@ -49,6 +49,11 @@ class LtiController extends Controller
         return $tool->getJWKS();
     }
 
+    public function ltiHelp()
+    {
+        return view('lti_help');
+    }
+
     /**
      * Handle being loaded in an iframe, which some browsers won't store a cookie for
      * by opening a new window outside of the iframe where the session actually works.

@@ -81,9 +81,9 @@ class AppController extends Controller
             if (!$ok) {
                 return "<html><body><h3>ERROR: Unable to save grade.  Please notify your instructor.</h3></body></html>";
             }
+            $assignment_response->date_outcome_reported = new Carbon();
+            $assignment_response->save();
         }
-        $assignment_response->date_outcome_reported = new Carbon();
-        $assignment_response->save();
 
         return redirect('/app');
     }
@@ -119,11 +119,11 @@ class AppController extends Controller
         $lti_tool = LtiTool::getLtiTool();
         $resourceLink = $lti_tool->getResourceLinkById($request->session()->get('lti_resource_link_dbid'));
         if ($resourceLink->hasOutcomesService()) {
-            $user_result = $lti_tool->getUserResultById($request->session()->get('lti_user_result_dbid'));
+            $user_result = $lti_tool->getUserResultById($assignment_response->user_result_id);
             $outcome = new LTI\Outcome($grade);
             $ok = $resourceLink->doOutcomesService(LTI\ResourceLink::EXT_WRITE, $outcome, $user_result);
             if (!$ok) {
-                return "<html><body><h3>ERROR: Unable to save grade.  Please notify your instructor.</h3></body></html>";
+                return "<html><body><h3>ERROR: Unable to save grade.  Please notify your administrator.</h3></body></html>";
             }
         }
 

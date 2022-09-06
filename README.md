@@ -17,25 +17,14 @@ A simple LTI tool for integrating Qualtrics surveys into a course.  Surveys can 
     * Use the included Dockerfile to run this in a Docker setup.  See https://github.com/orgs/longhornopen/packages/container/package/qualtrics-lti for prebuilt Docker images.
 
 ## Updating
-
 When updating to a new version:
-* `cd web`, then run `php artisan migrate` to pick up any database schema changes.
+* `cd web`, or `cd` into wherever you put the app's webroot (the folder containing the file 'artisan').
+* Then run `php artisan migrate` to pick up any database schema changes.
 
 ## LMS Setup
-Full docs about how to generate the info you need to install this tool in an LMS are at https://github.com/longhornopen/laravel-celtic-lti/wiki/LTI-Key-Generation
-
-But for most users, something like this will suffice:
-
-### LTI 1.2
-* `cd web`
-* `php artisan lti:add_platform_1.2 my_lms_name my_consumer_key my_shared_secret`
-* Install into LMS with launch URL: `{YOUR_SERVER_URL}/lti` and the consumer key/secret you created above.
-
-### LTI 1.3
-* `cd web`
+* `cd web`, or `cd` into wherever you put the app's webroot (the folder containing the file 'artisan').
 * Check the contents of config/lti.php and see if you need to supply or change any environment variables.
-* Use the link in 'LMS Setup' above if you need help creating an installation for this tool in your LMS.
-* `php artisan lti:add_platform_1.3` to get instructions on how to create a registration for the tool once it's installed.
+* Go to `{YOUR_SERVER_URL}/lti/help` to run some pre-flight checks and get instructions how to link this app to your LMS.
 
 ## Usage
 When placed in a course, the Qualtrics LTI tool can be configured with the URL of a Qualtrics survey.  Students will be sent to this survey, and Qualtrics will return them to the LTI tool afterwards so that their grade can be recorded.  You'll have to add a survey step to the Qualtrics survey to make that happen.

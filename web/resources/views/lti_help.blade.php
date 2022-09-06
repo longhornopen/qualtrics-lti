@@ -57,19 +57,6 @@
                             <li>Under 'LTI Advantage Services', turn on "Can view submission data for assignments associated with the tool." and "Can create and update submission results for assignments associated with the tool."</li>
                             <li>Under 'Additional Settings', choose Privacy Level = 'Public'.</li>
                             <li>Under 'Placements', choose 'Assignment Selection'.</li>
-                            <li>Set the tool to open in a new window.  Unfortunately, there's not an easy UI for this.  Switch Method to "Paste JSON", and edit extensions/settings/placements to add a "windowTarget" entry:
-                            <pre>
-                ...
-                "placements": [
-                    {
-                        "placement": "assignment_selection",
-                        "message_type": "LtiResourceLinkRequest",
-                        "windowTarget": "_blank"
-                    }
-                ]
-                ...
-                            </pre>
-                            </li>
                         </ul>
                     </li>
                     <li>Note the Client ID that was created.</li>

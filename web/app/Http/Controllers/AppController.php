@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpMissingReturnTypeInspection */
+
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
@@ -123,7 +125,7 @@ class AppController extends Controller
             $outcome = new LTI\Outcome($grade);
             $ok = $resourceLink->doOutcomesService(LTI\ResourceLink::EXT_WRITE, $outcome, $user_result);
             if (!$ok) {
-                return "<html><body><h3>ERROR: Unable to save grade.  Please notify your administrator.</h3></body></html>";
+                return "<html><body><h3>ERROR: Unable to save grade.  Please try again later, or notify your administrator.</h3></body></html>";
             }
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpMissingReturnTypeInspection */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -58,6 +60,8 @@ class LtiController extends Controller
      * Handle being loaded in an iframe, which some browsers won't store a cookie for
      * by opening a new window outside of the iframe where the session actually works.
      */
+    // FIXME: Are launchCheck() and launchRedirect() still needed with newer versions of Celtic-LTI?
+    //        Seems to be being handled there now.
     public function launchCheck(Request $request)
     {
         if ($request->session()->get('lti_session_exists')) {

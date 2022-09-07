@@ -96,7 +96,11 @@
             <tr>
                 <td>{{$resp->getPersonIdentity()}}</td>
                 <td>{{$resp->score}}</td>
-                <td>@if ($resp->date_outcome_reported) {{$resp->date_outcome_reported->diffForHumans()}} @endif</td>
+                <td>@if ($resp->date_outcome_reported)
+                        <span title="{{$resp->date_outcome_reported->toRfc7231String()}}">
+                            {{$resp->date_outcome_reported->diffForHumans()}}
+                        </span>
+                    @endif</td>
                 <td>
                     @if (!$resp->date_outcome_reported && $resp->score!==null) <form method="post" action="/app/resend_grade">
                         {{ @csrf_field() }}

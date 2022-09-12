@@ -65,6 +65,7 @@ class AppController extends Controller
         }
 
         $grade = (float)$request->get('Score') / (float)$request->get('MaxScore');
+        $grade = min(1, max(0, $grade)); // constrain grades to range [0,1], as LTI requires
         $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
             ->firstOrFail();
         $assignment_response = AssignmentResponse::where('assignment_id',$assignment->id)
@@ -118,6 +119,7 @@ class AppController extends Controller
         $assignment_response = AssignmentResponse::findOrFail($request->get('response_id'));
 
         $grade = $assignment_response->score;
+        $grade = min(1, max(0, $grade)); // constrain grades to range [0,1], as LTI requires
         $lti_tool = LtiTool::getLtiTool();
         $resourceLink = $lti_tool->getResourceLinkById($request->session()->get('lti_resource_link_dbid'));
         if ($resourceLink->hasOutcomesService()) {

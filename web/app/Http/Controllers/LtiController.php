@@ -22,11 +22,16 @@ class LtiController extends Controller
         // Store these in your database or session, as appropriate for your app.
         if ($tool->getLaunchType() === $tool::LAUNCH_TYPE_LAUNCH) {
             $roles = implode(',', $tool->userResult->roles);
-            $isTeacher = strpos($roles, "Instructor") !== FALSE ||
-                strpos($roles, "Faculty") !== FALSE ||
-                strpos($roles, "TeachingAssistant") !== FALSE ||
-                strpos($roles, "ContentDeveloper") !== FALSE ||
-                strpos($roles, "Administrator") !== FALSE;
+            // LTI 1.3 roles...
+            $isTeacher = str_contains($roles, 'http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor')
+               || str_contains($roles, 'http://purl.imsglobal.org/vocab/lis/v2/membership#Administrator')
+               || str_contains($roles, 'http://purl.imsglobal.org/vocab/lis/v2/institution/person#Administrator')
+               || str_contains($roles, 'http://purl.imsglobal.org/vocab/lis/v2/membership#ContentDeveloper')
+            // or LTI 1.2 roles...
+               || str_contains($roles, 'urn:lti:role:ims/lis/Instructor')
+               || str_contains($roles, 'urn:lti:role:ims/lis/Administrator')
+               || str_contains($roles, 'urn:lti:instrole:ims/lis/Administrator')
+               || str_contains($roles, 'urn:lti:role:ims/lis/ContentDeveloper');
 
             $session_data['lti_session_exists'] = true;
             $session_data['lti_user_result_dbid'] = $tool->userResult->getRecordId();

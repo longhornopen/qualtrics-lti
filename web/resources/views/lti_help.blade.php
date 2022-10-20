@@ -53,7 +53,7 @@
                     <li>Under 'Method', choose 'Manual Entry'.
                         <ul>
                             <li>For 'JWK Method', choose 'Public JWKS URL', with the value <code>{{env('APP_URL')}}/lti/jwks</code></li>
-                            <li>For all other URLs, use <code>{{env('APP_URL')}}/lti/jwks</code></li>
+                            <li>For all other URLs, use <code>{{env('APP_URL')}}/lti</code></li>
                             <li>Under 'LTI Advantage Services', turn on "Can view submission data for assignments associated with the tool." and "Can create and update submission results for assignments associated with the tool."</li>
                             <li>Under 'Additional Settings', choose Privacy Level = 'Public'.</li>
                             <li>Under 'Placements', choose 'Assignment Selection'.</li>

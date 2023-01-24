@@ -164,4 +164,23 @@ class AppController extends Controller
             'max_score' => $request->get('MaxScore')
         ]);
     }
+
+    // Requires DEV_MODE_ENABLE env flag, per routes/web.php
+    public function getDevModeLaunch(Request $request) {
+        return view('dev/launch');
+    }
+
+    // Requires DEV_MODE_ENABLE env flag, per routes/web.php
+    public function postDevModeLaunch(Request $request) {
+        $request->session()->put('lti_session_exists', true);
+        $request->session()->put('lti_is_teacher', $request->get('is_teacher'));
+        $request->session()->put('lti_resource_link_dbid', $request->get('resource_link_dbid'));
+
+        // FIXME: support student test launches later
+        //        $request->session()->get('lti_user_result_dbid');
+        //        $request->session()->get('lti_user_name');
+        //        $request->session()->get('lti_user_email');
+
+        return redirect('/app');
+    }
 }

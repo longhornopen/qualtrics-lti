@@ -37,3 +37,8 @@ Route::middleware([CheckLtiLogin::class])->group(function () {
 
 // Test survey which behaves similarly to a Qualtrics survey, for testing without Qualtrics
 Route::get('/test/survey', function() { return view('dev/test_survey'); });
+
+if (env('DEV_MODE_ENABLE')) {
+    Route::get('/dev/launch', [AppController::class, 'getDevModeLaunch']);
+    Route::post('/dev/launch', [AppController::class, 'postDevModeLaunch']);
+}

@@ -6,6 +6,7 @@
     <title>Qualtrics LTI Tool</title>
 
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <link rel="stylesheet" href="/custom/custom.css">
 
     <script src="{{ asset('/js/manifest.js') }}"></script>
     <script src="{{ asset('/js/vendor.js') }}"></script>

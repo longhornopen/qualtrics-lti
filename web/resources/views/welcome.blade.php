@@ -6,6 +6,7 @@
     <title>Qualtrics LTI Tool</title>
 
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <link rel="stylesheet" href="/custom/custom.css">
 
     <script src="{{ asset('/js/manifest.js') }}"></script>
     <script src="{{ asset('/js/vendor.js') }}"></script>
@@ -15,7 +16,7 @@
 
 <div class="container">
 
-    <div class="row header">
+    <div class="row header" id="header_row">
         <div class="col-md-12">
             <h3>Qualtrics LTI Tool</h3>
         </div>
@@ -101,8 +102,8 @@
     </div><!-- Row -->
 
     @if (!env('APP_HIDE_LONGHORNOPEN_BRANDING'))
-    <div class="row footer">
-        <div class="float-right">Provided by <a id="provided_link" href="https://longhornopen.github.io/"><img height="40" src="/img/longhorn_open_logo.svg"> Longhorn Open</a></div>
+    <div class="row footer" id="footer_row">
+        <div class="float-right" id="branding_logo">Provided by <a id="provided_link" href="https://longhornopen.github.io/"><img height="40" src="/img/longhorn_open_logo.svg"> Longhorn Open</a></div>
     </div>
     @endif
 </div>

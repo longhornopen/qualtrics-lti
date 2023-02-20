@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use LonghornOpen\LaravelCelticLTI\LtiTool;
+/* LeagueCSV library */
+use League\Csv\Writer;
 
 class AppController extends Controller
 {
@@ -180,6 +182,43 @@ class AppController extends Controller
         //        $request->session()->get('lti_user_result_dbid');
         //        $request->session()->get('lti_user_name');
         //        $request->session()->get('lti_user_email');
+
+        return redirect('/app');
+    }
+
+
+
+   
+    /** 
+    * Grade Passback
+    * @param request ID as Request
+    * @return redirects to teacher tool view
+    */
+    public function gradePassback(Request $request){
+
+        if ($request->session()->get('lti_is_teacher')) {
+            //get data
+            $sth = $dbh-> prepare(
+                "SELECT assignment_id, user_result_id, user_name, user_email FROM $assignment_responses LIMIT 200"
+            );
+
+            //no duplicate data
+            $sth->setFetchMode(PDO::FETCH_ASSOC);
+            $sth->execute();
+
+            //create the CSV file into memory
+            $csv =Writer::createFromFileObject(new SplTempFileObject());
+
+            //insert the CSV header
+            $csv->insertOne(['assignmentID' , 'userResultID', 'userName', 'userEmail']);
+
+            //insert data into the CSV file
+            $csv->insertAll($sth);
+            
+            //save CSV file
+            $csv->output('grades.csv');
+            die;
+        }
 
         return redirect('/app');
     }

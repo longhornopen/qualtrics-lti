@@ -33,6 +33,7 @@ Route::middleware([CheckLtiLogin::class])->group(function () {
     Route::post('/app/resend_grade', [AppController::class, 'postResendGrade']);
     Route::get('/app/test_begin', [AppController::class, 'getTestBegin']);
     Route::get('/app/test_end', [AppController::class, 'getTestEnd']);
+    Route::get('/app/exportCSV', [AppController::class, 'gradePassback']);
 });
 
 // Test survey which behaves similarly to a Qualtrics survey, for testing without Qualtrics

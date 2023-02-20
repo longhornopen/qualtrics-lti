@@ -107,10 +107,17 @@
                         <input type="hidden" name="response_id" value="{{$resp->id}}">
                         <button type="submit" class="btn btn-secondary">Update grade</button>
                     </form>@endif
-                </td>
+                </td>   
             </tr>
         @endforeach
     </table>
+
+    <button id="CSV-btn" class="btn btn-primary">Download CSV</button>
+    <script type= "text/javascript">
+        document.getElementById("CSV-btn").onclick = function(){
+            location.href = "/exportCSV";
+        }
+   </script>
 
     <br><br>
 @endsection

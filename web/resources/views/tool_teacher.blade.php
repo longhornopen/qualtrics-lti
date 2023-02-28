@@ -115,7 +115,7 @@
     <button id="CSV-btn" class="btn btn-primary">Download CSV</button>
     <script type= "text/javascript">
         document.getElementById("CSV-btn").onclick = function(){
-            location.href = "/exportCSV";
+            location.href = "/app/exportCSV";
         }
    </script>
 

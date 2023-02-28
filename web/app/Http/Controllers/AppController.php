@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\DB;
 use LonghornOpen\LaravelCelticLTI\LtiTool;
 /* LeagueCSV library */
 use League\Csv\Writer;
+use SplTempFileObject;
+
+//require __DIR__.'/vendor/autoload.php';
+
 
 class AppController extends Controller
 {
@@ -186,40 +190,32 @@ class AppController extends Controller
         return redirect('/app');
     }
 
-
-
-   
-    /** 
-    * Grade Passback
-    * @param request ID as Request
-    * @return redirects to teacher tool view
-    */
     public function gradePassback(Request $request){
-
-        if ($request->session()->get('lti_is_teacher')) {
-            //get data
-            $sth = $dbh-> prepare(
-                "SELECT assignment_id, user_result_id, user_name, user_email FROM $assignment_responses LIMIT 200"
-            );
-
-            //no duplicate data
-            $sth->setFetchMode(PDO::FETCH_ASSOC);
-            $sth->execute();
-
-            //create the CSV file into memory
-            $csv =Writer::createFromFileObject(new SplTempFileObject());
-
-            //insert the CSV header
-            $csv->insertOne(['assignmentID' , 'userResultID', 'userName', 'userEmail']);
-
-            //insert data into the CSV file
-            $csv->insertAll($sth);
+          $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
+         ->firstOrFail();
             
-            //save CSV file
-            $csv->output('grades.csv');
-            die;
-        }
+         set_time_limit(60);
+         ini_set('memory_limit', '2048M');
+         if(!ini_get('auto_detect_line_endings')){
+            ini_set('auto_detect_line_endings', '1');
+         }
 
-        return redirect('/app');
+         $assignment_response = AssignmentResponse::where('assignment_id',$assignment->id)
+         ->get();
+         if($assignment_response->count() == 0){
+            return redirect('/app');
+         }
+        
+         $csv = Writer::createFromFileObject(new SplTempFileObject());
+    
+         $csv->insertOne(['timeStamp' , 'userResultID', 'score', 'userName', 'userEmail']);
+         foreach($assignment_response as $response){
+          $csv->insertOne([$response->date_outcome_reported,$response->user_result_id,$response->score, $response->user_name, $response->user_email]);
+         }
+            
+         $file_name1 = $assignment->id;
+         $csv->output('assignment_' . $file_name1 . '_grades.csv');
+         die;
     }
+
 }

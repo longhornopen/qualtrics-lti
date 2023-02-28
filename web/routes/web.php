@@ -43,3 +43,4 @@ if (env('DEV_MODE_ENABLE')) {
     Route::get('/dev/launch', [AppController::class, 'getDevModeLaunch']);
     Route::post('/dev/launch', [AppController::class, 'postDevModeLaunch']);
 }
+

@@ -3,7 +3,7 @@ A simple LTI tool for integrating Qualtrics surveys into a course.  Surveys can 
 
 ## Installation
 * Clone or download this repo.
-* Install PHP (7.4 or higher)
+* Install PHP (See web/composer.json for minimum version)
 * Install Composer (https://getcomposer.org)
 * `cd` into the 'web' folder in this repo.
 * `cp .env.example .env` to create a new env file from the provided example.

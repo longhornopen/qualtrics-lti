@@ -107,10 +107,12 @@
                         <input type="hidden" name="response_id" value="{{$resp->id}}">
                         <button type="submit" class="btn btn-secondary">Update grade</button>
                     </form>@endif
-                </td>
+                </td>   
             </tr>
         @endforeach
     </table>
+
+    <a class="btn btn-primary" role="button" href="/app/exportCSV">Download CSV</a>
 
     <br><br>
 @endsection

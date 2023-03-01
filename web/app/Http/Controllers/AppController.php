@@ -15,8 +15,6 @@ use LonghornOpen\LaravelCelticLTI\LtiTool;
 use League\Csv\Writer;
 use SplTempFileObject;
 
-//require __DIR__.'/vendor/autoload.php';
-
 
 class AppController extends Controller
 {
@@ -200,17 +198,17 @@ class AppController extends Controller
             ini_set('auto_detect_line_endings', '1');
          }
 
-         $assignment_response = AssignmentResponse::where('assignment_id',$assignment->id)
+         $assignment_responses = AssignmentResponse::where('assignment_id',$assignment->id)
          ->get();
-         if($assignment_response->count() == 0){
+         if($assignment_responses->count() == 0){
             return redirect('/app');
          }
         
          $csv = Writer::createFromFileObject(new SplTempFileObject());
     
-         $csv->insertOne(['timeStamp' , 'userResultID', 'score', 'userName', 'userEmail']);
-         foreach($assignment_response as $response){
-          $csv->insertOne([$response->date_outcome_reported,$response->user_result_id,$response->score, $response->user_name, $response->user_email]);
+         $csv->insertOne(['gradeReported' , 'score', 'userName', 'userEmail']);
+         foreach($assignment_responses as $assignment_response){
+          $csv->insertOne([$assignment_response->date_outcome_reported,$assignment_response->score, $assignment_response->user_name, $assignment_response->user_email]);
          }
             
          $file_name1 = $assignment->id;

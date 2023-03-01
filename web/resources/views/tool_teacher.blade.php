@@ -112,12 +112,7 @@
         @endforeach
     </table>
 
-    <button id="CSV-btn" class="btn btn-primary">Download CSV</button>
-    <script type= "text/javascript">
-        document.getElementById("CSV-btn").onclick = function(){
-            location.href = "/app/exportCSV";
-        }
-   </script>
+    <a class="btn btn-primary" role="button" href="/app/exportCSV">Download CSV</a>
 
     <br><br>
 @endsection

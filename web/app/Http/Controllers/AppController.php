@@ -11,14 +11,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use LonghornOpen\LaravelCelticLTI\LtiTool;
-/* LeagueCSV library */
 use League\Csv\Writer;
 use SplTempFileObject;
 
 
 class AppController extends Controller
 {
-    public function getTool(Request $request) {
+    public function getTool(Request $request)
+    {
         $assignment = Assignment::firstOrCreate([
             'resource_link_dbid' => $request->session()->get('lti_resource_link_dbid'),
         ], [
@@ -30,7 +30,7 @@ class AppController extends Controller
         if ($request->session()->get('lti_is_teacher')) {
             return view('tool_teacher', [
                 'assignment' => $assignment,
-                'assignment_responses' => AssignmentResponse::where('assignment_id',$assignment->id)->get()
+                'assignment_responses' => AssignmentResponse::where('assignment_id', $assignment->id)->get()
             ]);
         }
 
@@ -44,7 +44,7 @@ class AppController extends Controller
         ]);
 
         $sep = "&";
-        if (strpos($assignment->qualtrics_url, "?")===FALSE) {
+        if (strpos($assignment->qualtrics_url, "?") === FALSE) {
             $sep = "?";
         }
         $full_qualtrics_url = $assignment->qualtrics_url . $sep . "return_url=" . urlencode($request->url() . "/response");
@@ -60,7 +60,8 @@ class AppController extends Controller
         ]);
     }
 
-    public function getToolResponse(Request $request) {
+    public function getToolResponse(Request $request)
+    {
         if (!$request->has('Score')) {
             return "ERROR: 'Score' parameter is missing on return URL.";
         }
@@ -72,7 +73,7 @@ class AppController extends Controller
         $grade = min(1, max(0, $grade)); // constrain grades to range [0,1], as LTI requires
         $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
             ->firstOrFail();
-        $assignment_response = AssignmentResponse::where('assignment_id',$assignment->id)
+        $assignment_response = AssignmentResponse::where('assignment_id', $assignment->id)
             ->where('user_result_id', $request->session()->get('lti_user_result_dbid'))
             ->firstOrFail();
 
@@ -95,7 +96,8 @@ class AppController extends Controller
         return redirect('/app');
     }
 
-    public function postToolConfig(Request $request) {
+    public function postToolConfig(Request $request)
+    {
         if (!$request->session()->get('lti_is_teacher')) {
             abort(403);
         }
@@ -141,11 +143,41 @@ class AppController extends Controller
         return redirect('/app')->with('success_msg', "Grade successfully updated.");
     }
 
-    public function getTestBegin(Request $request) {
+    public function getCsvExport(Request $request)
+    {
+        $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
+            ->firstOrFail();
+
+        set_time_limit(60);
+        ini_set('memory_limit', '2048M');
+        if (!ini_get('auto_detect_line_endings')) {
+            ini_set('auto_detect_line_endings', '1');
+        }
+
+        $assignment_responses = AssignmentResponse::where('assignment_id', $assignment->id)
+            ->get();
+        if ($assignment_responses->count() == 0) {
+            return redirect('/app');
+        }
+
+        $csv = Writer::createFromFileObject(new SplTempFileObject());
+
+        $csv->insertOne(['gradeReported', 'score', 'userName', 'userEmail']);
+        foreach ($assignment_responses as $assignment_response) {
+            $csv->insertOne([$assignment_response->date_outcome_reported, $assignment_response->score, $assignment_response->user_name, $assignment_response->user_email]);
+        }
+
+        $file_name1 = $assignment->id;
+        $csv->output('assignment_' . $file_name1 . '_grades.csv');
+        die;
+    }
+
+    public function getTestBegin(Request $request)
+    {
         $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
             ->firstOrFail();
         $sep = "&";
-        if (strpos($assignment->qualtrics_url, "?")===FALSE) {
+        if (strpos($assignment->qualtrics_url, "?") === FALSE) {
             $sep = "?";
         }
         $response_url = str_replace('/test_begin', '/test_end', $request->url());
@@ -157,7 +189,8 @@ class AppController extends Controller
         ]);
     }
 
-    public function getTestEnd(Request $request) {
+    public function getTestEnd(Request $request)
+    {
         $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
             ->firstOrFail();
 
@@ -170,12 +203,14 @@ class AppController extends Controller
     }
 
     // Requires DEV_MODE_ENABLE env flag, per routes/web.php
-    public function getDevModeLaunch(Request $request) {
+    public function getDevModeLaunch(Request $request)
+    {
         return view('dev/launch');
     }
 
     // Requires DEV_MODE_ENABLE env flag, per routes/web.php
-    public function postDevModeLaunch(Request $request) {
+    public function postDevModeLaunch(Request $request)
+    {
         $request->session()->put('lti_session_exists', true);
         $request->session()->put('lti_is_teacher', $request->get('is_teacher'));
         $request->session()->put('lti_resource_link_dbid', $request->get('resource_link_dbid'));
@@ -186,34 +221,6 @@ class AppController extends Controller
         //        $request->session()->get('lti_user_email');
 
         return redirect('/app');
-    }
-
-    public function gradePassback(Request $request){
-          $assignment = Assignment::where('resource_link_dbid', $request->session()->get('lti_resource_link_dbid'))
-         ->firstOrFail();
-            
-         set_time_limit(60);
-         ini_set('memory_limit', '2048M');
-         if(!ini_get('auto_detect_line_endings')){
-            ini_set('auto_detect_line_endings', '1');
-         }
-
-         $assignment_responses = AssignmentResponse::where('assignment_id',$assignment->id)
-         ->get();
-         if($assignment_responses->count() == 0){
-            return redirect('/app');
-         }
-        
-         $csv = Writer::createFromFileObject(new SplTempFileObject());
-    
-         $csv->insertOne(['gradeReported' , 'score', 'userName', 'userEmail']);
-         foreach($assignment_responses as $assignment_response){
-          $csv->insertOne([$assignment_response->date_outcome_reported,$assignment_response->score, $assignment_response->user_name, $assignment_response->user_email]);
-         }
-            
-         $file_name1 = $assignment->id;
-         $csv->output('assignment_' . $file_name1 . '_grades.csv');
-         die;
     }
 
 }

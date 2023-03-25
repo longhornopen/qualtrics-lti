@@ -63,20 +63,20 @@
         },
         {
             "name": "celtic/lti",
-            "version": "v4.10.1",
+            "version": "v4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/celtic-project/LTI-PHP.git",
-                "reference": "22f2e248f9bce26a7f5e37c01e8d776daaba7083"
+                "reference": "f0acefac9cdf524cb371b8d4e2fdcd46473d5a3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/celtic-project/LTI-PHP/zipball/22f2e248f9bce26a7f5e37c01e8d776daaba7083",
-                "reference": "22f2e248f9bce26a7f5e37c01e8d776daaba7083",
+                "url": "https://api.github.com/repos/celtic-project/LTI-PHP/zipball/f0acefac9cdf524cb371b8d4e2fdcd46473d5a3a",
+                "reference": "f0acefac9cdf524cb371b8d4e2fdcd46473d5a3a",
                 "shasum": ""
             },
             "require": {
-                "firebase/php-jwt": ">=5.5.0 <=6.0.0",
+                "firebase/php-jwt": "^5.5.0",
                 "php": ">=5.6.0"
             },
             "type": "library",
@@ -102,9 +102,9 @@
             ],
             "support": {
                 "issues": "https://github.com/celtic-project/LTI-PHP/issues",
-                "source": "https://github.com/celtic-project/LTI-PHP/tree/v4.10.1"
+                "source": "https://github.com/celtic-project/LTI-PHP/tree/v4.9.0"
             },
-            "time": "2022-11-27T20:07:55+00:00"
+            "time": "2022-09-30T16:59:38+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -479,16 +479,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v6.0.0",
+            "version": "v5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "0541cba75ab108ef901985e68055a92646c73534"
+                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/0541cba75ab108ef901985e68055a92646c73534",
-                "reference": "0541cba75ab108ef901985e68055a92646c73534",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/83b609028194aa042ea33b5af2d41a7427de80e6",
+                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6",
                 "shasum": ""
             },
             "require": {
@@ -530,9 +530,9 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v6.0.0"
+                "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
             },
-            "time": "2022-01-24T15:18:34+00:00"
+            "time": "2021-11-08T20:18:51+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -1738,20 +1738,20 @@
         },
         {
             "name": "longhornopen/laravel-celtic-lti",
-            "version": "v0.4.6",
+            "version": "v0.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/longhornopen/laravel-celtic-lti.git",
-                "reference": "ebb6ab9e04d3911928dd839b611228aa8bf8533b"
+                "reference": "fe9aaaf6e7b4481ee8a892cc5c9cd94440617b69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/longhornopen/laravel-celtic-lti/zipball/ebb6ab9e04d3911928dd839b611228aa8bf8533b",
-                "reference": "ebb6ab9e04d3911928dd839b611228aa8bf8533b",
+                "url": "https://api.github.com/repos/longhornopen/laravel-celtic-lti/zipball/fe9aaaf6e7b4481ee8a892cc5c9cd94440617b69",
+                "reference": "fe9aaaf6e7b4481ee8a892cc5c9cd94440617b69",
                 "shasum": ""
             },
             "require": {
-                "celtic/lti": "^4.9.0",
+                "celtic/lti": "4.9.0",
                 "ext-pdo": "*",
                 "illuminate/support": "*"
             },
@@ -1781,9 +1781,9 @@
             ],
             "support": {
                 "issues": "https://github.com/longhornopen/laravel-celtic-lti/issues",
-                "source": "https://github.com/longhornopen/laravel-celtic-lti/tree/v0.4.6"
+                "source": "https://github.com/longhornopen/laravel-celtic-lti/tree/v0.4.5"
             },
-            "time": "2023-03-25T14:03:22+00:00"
+            "time": "2023-02-16T21:43:07+00:00"
         },
         {
             "name": "monolog/monolog",

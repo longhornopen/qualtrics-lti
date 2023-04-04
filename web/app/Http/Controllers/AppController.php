@@ -9,7 +9,6 @@ use App\Models\AssignmentResponse;
 use ceLTIc\LTI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use LonghornOpen\LaravelCelticLTI\LtiTool;
 use League\Csv\Writer;
 use SplTempFileObject;

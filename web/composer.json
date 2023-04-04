@@ -12,6 +12,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
         "laravel/ui": "^3.2",
+        "league/csv": "^9.0",
         "longhornopen/laravel-celtic-lti": "^0.4.5"
     },
     "require-dev": {

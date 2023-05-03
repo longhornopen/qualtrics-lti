@@ -86,7 +86,7 @@
                         <li>Edit your survey and click 'Survey Flow'.</li>
                         <li>Click 'Add a New Element Here'.</li>
                         <li>Choose an 'Embedded Data' element.</li>
-                        <li>When asked for an 'Embedded Data Field Name', enter 'score' (no quotes).</li>
+                        <li>When asked for an 'Embedded Data Field Name', enter 'score' (no quotes, all lowercase).</li>
                         <li>Click 'Set a Value Now'.</li>
                         <li>Choose 'Insert Piped Text' > 'Scoring' and select your scoring category.</li>
                         <li>Still in the 'Survey Flow' screen, click add a new 'End of Survey' element.</li>

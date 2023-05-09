@@ -49,9 +49,14 @@
 
     <div class="row">
         <div class="col-md-12" style="margin-bottom: 1rem;">
-            If you haven't already, <a href="/" target="_blank" class="body_link">set up your survey according to the instructions.</a>
+            <ul>
+                <li>If you haven't already, <a href="/" target="_blank" class="body_link">set up your survey according to the instructions.</a></li>
+                <li>Be sure your survey only uses accessible question types. For a list of accessible question types along with more information about survey accessibility, please <a href="https://www.qualtrics.com/support/survey-platform/survey-module/survey-tools/check-survey-accessibility/#QuestionTypeAccessibility" target="_blank" class="body_link">see the Qualtrics Survey Accessibility guide.</a></li>
+                <li>Once you've set up your survey, test it using the 'Test Survey' link below.</li>
+            </ul>
         </div>
         <div class="col-md-12" style="margin-bottom: 1rem;">
+            <hr>
             <form method="post" action="/app/config">
                 {{@csrf_field()}}
                 <div style="margin-bottom: 1rem;">

@@ -1,13 +1,13 @@
 FROM composer:2 as phpbuild
 ADD web /var/www/html
 WORKDIR /var/www/html
-RUN composer install
+RUN composer install --ignore-platform-reqs --no-dev
 
 
 FROM node:13 as npmbuild
 COPY --from=phpbuild /var/www/html /var/www/html
 WORKDIR /var/www/html
-RUN npm install && npm run production && rm -rf /var/www/html/node_modules
+RUN npm ci && npm run production && rm -rf /var/www/html/node_modules
 
 
 FROM php:8.1-apache

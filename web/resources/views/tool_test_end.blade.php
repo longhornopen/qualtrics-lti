@@ -4,7 +4,7 @@
 
     <h2>Testing your survey</h2>
 
-    <p><a href="/app"><<< back to editing survey</a></p>
+    <p><a href="/app" class="body_link"><<< back to editing survey</a></p>
 
     <p>
         <span style="background-color: lightgreen;border:solid 1px green;border-radius:5px;padding:5px;">✔️OK!</span>
@@ -25,7 +25,7 @@
 
     <p>
         There should be numbers for both 'Score' and 'MaxScore' above.  If not, check that you've followed
-        the <a href="/" target="_blank">'How do I grade a Qualtrics survey?' instructions</a>.
+        the <a href="/" target="_blank" class="body_link">'How do I grade a Qualtrics survey?' instructions</a>.
     </p>
 
     <hr>

@@ -48,25 +48,25 @@
     @endif
 
     <div class="row">
-        <div class="col-md-12">
-            If you haven't already, <a href="/" target="_blank">set up your survey according to the instructions.</a>
+        <div class="col-md-12" style="margin-bottom: 1rem;">
+            If you haven't already, <a href="/" target="_blank" class="body_link">set up your survey according to the instructions.</a>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" style="margin-bottom: 1rem;">
             <form method="post" action="/app/config">
                 {{@csrf_field()}}
-                <div class="form-group">
-                    <label for="qualtrics_url">Qualtrics Survey URL</label>
-                    <small class="form-text text-muted">In Qualtrics, this is under the 'Distributions' menu item.  Click 'Distribute Survey', then 'Web', then 'Use Anonymous Link'.</small>
+                <div style="margin-bottom: 1rem;">
+                    <label for="qualtrics_url" style="font-size:1.35rem;">Qualtrics Survey URL</label>
+                    <small class="form-text">In Qualtrics, this is under the 'Distributions' menu item.  Click 'Distribute Survey', then 'Web', then 'Use Anonymous Link'.</small>
                     <input type="text" class="form-control" id="qualtrics_url" name="qualtrics_url" value="{{$assignment->qualtrics_url}}">
                 </div>
-                <div class="form-group">
-                    <label for="intro_text">Intro text</label>
-                    <small class="form-text text-muted">The text your students will see at the beginning of the survey.</small>
+                <div style="margin-bottom: 1rem;">
+                    <label for="intro_text" style="font-size:1.35rem;">Intro text</label>
+                    <small class="form-text">The text your students will see at the beginning of the survey.</small>
                     <textarea class="form-control" id="intro_text" name="intro_text">{{$assignment->intro_text}}</textarea>
                 </div>
-                <div class="form-group">
-                    <label for="finish_text">Finished text</label>
-                    <small class="form-text text-muted">The text your students will see at the end of the survey.</small>
+                <div style="margin-bottom: 1rem;">
+                    <label for="finish_text" style="font-size:1.35rem;">Finished text</label>
+                    <small class="form-text">The text your students will see at the end of the survey.</small>
                     <textarea class="form-control tinymce" id="finish_text" name="finish_text">{{$assignment->finish_text}}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -74,45 +74,53 @@
         </div>
     </div>
 
-    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <h3>Test Survey</h3>
+            <p>
+                After saving the configuration above, <a href="/app/test_begin" class="body_link">test your survey</a> and make sure it's set up correctly.
+            </p>
+        </div>
+    </div>
 
-    <h3>Test Survey</h3>
-    <p>
-        After saving the configuration above, <a href="/app/test_begin">test your survey</a> and make sure it's set up correctly.
-    </p>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
 
-    <hr>
+            <h3>Responses</h3>
 
-    <h3>Responses</h3>
+            <table class="table table-striped">
+                <tr>
+                    <th>Student</th>
+                    <th>Score</th>
+                    <th>Grade reported</th>
+                    <th></th>
+                </tr>
+                @foreach ($assignment_responses as $resp)
+                    <tr>
+                        <td>{{$resp->getPersonIdentity()}}</td>
+                        <td>{{$resp->score}}</td>
+                        <td>@if ($resp->date_outcome_reported)
+                                <span title="{{$resp->date_outcome_reported->toRfc7231String()}}">
+                                    {{$resp->date_outcome_reported->diffForHumans()}}
+                                </span>
+                            @endif</td>
+                        <td>
+                            @if (!$resp->date_outcome_reported && $resp->score!==null) <form method="post" action="/app/resend_grade">
+                                {{ @csrf_field() }}
+                                <input type="hidden" name="response_id" value="{{$resp->id}}">
+                                <button type="submit" class="btn btn-secondary">Update grade</button>
+                            </form>@endif
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
 
-    <table class="table table-striped">
-        <tr>
-            <th>Student</th>
-            <th>Score</th>
-            <th>Grade reported</th>
-            <th></th>
-        </tr>
-        @foreach ($assignment_responses as $resp)
-            <tr>
-                <td>{{$resp->getPersonIdentity()}}</td>
-                <td>{{$resp->score}}</td>
-                <td>@if ($resp->date_outcome_reported)
-                        <span title="{{$resp->date_outcome_reported->toRfc7231String()}}">
-                            {{$resp->date_outcome_reported->diffForHumans()}}
-                        </span>
-                    @endif</td>
-                <td>
-                    @if (!$resp->date_outcome_reported && $resp->score!==null) <form method="post" action="/app/resend_grade">
-                        {{ @csrf_field() }}
-                        <input type="hidden" name="response_id" value="{{$resp->id}}">
-                        <button type="submit" class="btn btn-secondary">Update grade</button>
-                    </form>@endif
-                </td>   
-            </tr>
-        @endforeach
-    </table>
+            <a class="btn btn-primary" role="button" href="/app/exportCSV">Download CSV</a>
 
-    <a class="btn btn-primary" role="button" href="/app/exportCSV">Download CSV</a>
+        </div>
+    </div>
 
     <br><br>
 @endsection

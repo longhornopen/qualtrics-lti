@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -82,7 +82,7 @@
                     <p class="card-text">
                         If you want to calculate a grade in Qualtrics,*
                     <ol>
-                        <li><a href="https://www.qualtrics.com/support/survey-platform/survey-module/survey-tools/response-management-tools/scoring/" target="_blank">Set up a Scoring category in Qualtrics</a> and score your questions.</li>
+                        <li><a href="https://www.qualtrics.com/support/survey-platform/survey-module/survey-tools/response-management-tools/scoring/" target="_blank" class="body_link">Set up a Scoring category in Qualtrics</a> and score your questions.</li>
                         <li>Edit your survey and click 'Survey Flow'.</li>
                         <li>Click 'Add a New Element Here'.</li>
                         <li>Choose an 'Embedded Data' element.</li>
@@ -103,7 +103,7 @@
 
     @if (!env('APP_HIDE_LONGHORNOPEN_BRANDING'))
     <div class="row footer" id="footer_row">
-        <div class="float-right" id="branding_logo">Provided by <a id="provided_link" href="https://longhornopen.github.io/"><img height="40" src="/img/longhorn_open_logo.svg"> Longhorn Open</a></div>
+        <div class="float-right" id="branding_logo">Provided by <a id="provided_link" href="https://longhornopen.github.io/"><img height="40" src="/img/longhorn_open_logo.svg" alt="Longhorn Open logo"> Longhorn Open</a></div>
     </div>
     @endif
 </div>

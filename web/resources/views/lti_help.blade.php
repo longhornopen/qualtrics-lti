@@ -16,7 +16,7 @@
         about how to integrate it into your LMS.
         <br><br>
         If you need some LMS-specific info that's not covered here, it may be described at
-        <a href="https://github.com/longhornopen/laravel-celtic-lti/wiki/LTI-Key-Generation" target="_blank">https://github.com/longhornopen/laravel-celtic-lti/wiki/LTI-Key-Generation</a>
+        <a href="https://github.com/longhornopen/laravel-celtic-lti/wiki/LTI-Key-Generation" target="_blank" class="body_link">https://github.com/longhornopen/laravel-celtic-lti/wiki/LTI-Key-Generation</a>
     </p>
     <hr>
     <h2>LTI 1.3</h2>
@@ -36,7 +36,7 @@
             The file at <code>config/lti.php</code> contains the RSA info you need to provide.  By default, they're read
             from environment variables, which is preferred, but in a pinch you can hard-code values there.
             <br><br>
-            Several web-based apps such as <a href="https://cryptotools.net/rsagen">https://cryptotools.net/rsagen</a>
+            Several web-based apps such as <a href="https://cryptotools.net/rsagen" class="body_link">https://cryptotools.net/rsagen</a>
             can generate RSA keys for you, or you can do it from the command line.
         </p>
     @endif
@@ -49,7 +49,7 @@
             <li>
                 Canvas LMS
                 <ul>
-                    <li><a href="https://community.canvaslms.com/t5/Admin-Guide/How-do-I-configure-an-LTI-key-for-an-account/ta-p/140" target="_blank">Add a new Developer Key</a>.</li>
+                    <li><a href="https://community.canvaslms.com/t5/Admin-Guide/How-do-I-configure-an-LTI-key-for-an-account/ta-p/140" target="_blank" class="body_link">Add a new Developer Key</a>.</li>
                     <li>Under 'Method', choose 'Manual Entry'.
                         <ul>
                             <li>For 'JWK Method', choose 'Public JWKS URL', with the value <code>{{env('APP_URL')}}/lti/jwks</code></li>
@@ -60,7 +60,7 @@
                         </ul>
                     </li>
                     <li>Note the Client ID that was created.</li>
-                    <li><a href="https://community.canvaslms.com/t5/Admin-Guide/How-do-I-configure-an-external-app-for-an-account-using-a-client/ta-p/202" target="_blank">Install the app into a course.</a></li>
+                    <li><a href="https://community.canvaslms.com/t5/Admin-Guide/How-do-I-configure-an-external-app-for-an-account-using-a-client/ta-p/202" target="_blank" class="body_link">Install the app into a course.</a></li>
                     <li>Note the Deployment ID that was created.  <i>(In the course's Settings menu, it's found in 'Apps' > 'View App Configurations' > 'Deployment ID' in the pulldown menu next to the app.)</i></li>
                 </ul>
             </li>

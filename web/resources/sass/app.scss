@@ -7,6 +7,11 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Accessibility tweaks
+a.body_link {
+    text-decoration: underline;
+}
+
 .page_home {
     .header {
         padding: 10px;

@@ -10,8 +10,10 @@
                 plugins: [
                     'advlist autolink lists link image charmap anchor',
                     'searchreplace visualblocks',
-                    'media table paste'
+                    'media table paste',
+                    'help'
                 ],
+                help_tabs: ['shortcuts', 'keyboardnav'],
                 toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
                 branding: false
             });
@@ -21,8 +23,10 @@
                 plugins: [
                     'advlist autolink lists link image charmap anchor',
                     'searchreplace visualblocks',
-                    'media table paste'
+                    'media table paste',
+                    'help'
                 ],
+                help_tabs: ['shortcuts', 'keyboardnav'],
                 toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
                 branding: false
             });

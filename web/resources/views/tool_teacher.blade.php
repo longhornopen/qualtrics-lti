@@ -66,17 +66,17 @@
                 <div style="margin-bottom: 1rem;">
                     <label for="qualtrics_url" style="font-size:1.35rem;">Qualtrics Survey URL</label>
                     <small class="form-text">In Qualtrics, this is under the 'Distributions' menu item.  Click 'Distribute Survey', then 'Web', then 'Use Anonymous Link'.</small>
-                    <input type="text" class="form-control" id="qualtrics_url" name="qualtrics_url" value="{{$assignment->qualtrics_url}}">
+                    <input type="text" class="form-control" id="qualtrics_url" name="qualtrics_url" value="{{ old('qualtrics_url', $assignment->qualtrics_url) }}">
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label for="intro_text" style="font-size:1.35rem;">Intro text</label>
                     <small class="form-text">The text your students will see at the beginning of the survey.</small>
-                    <textarea class="form-control" id="intro_text" name="intro_text">{{$assignment->intro_text}}</textarea>
+                    <textarea class="form-control" id="intro_text" name="intro_text">{{ old('intro_text', $assignment->intro_text) }}</textarea>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label for="finish_text" style="font-size:1.35rem;">Finished text</label>
                     <small class="form-text">The text your students will see at the end of the survey.</small>
-                    <textarea class="form-control tinymce" id="finish_text" name="finish_text">{{$assignment->finish_text}}</textarea>
+                    <textarea class="form-control tinymce" id="finish_text" name="finish_text">{{ old('finish_text', $assignment->finish_text) }}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>

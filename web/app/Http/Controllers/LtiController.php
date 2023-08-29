@@ -23,7 +23,6 @@ class LtiController extends Controller
         if ($tool->getLaunchType() === $tool::LAUNCH_TYPE_LAUNCH) {
             $isTeacher = $tool->userResult->isAdmin() || $tool->userResult->isStaff();
 
-            $session_data['lti_session_exists'] = true;
             $session_data['lti_user_result_dbid'] = $tool->userResult->getRecordId();
             $session_data['lti_user_name'] = $tool->userResult->fullname;
             $session_data['lti_user_email'] = $tool->userResult->email;
@@ -33,11 +32,11 @@ class LtiController extends Controller
             $session_data['lti_is_teacher'] = $isTeacher;
         }
 
-        $request->session()->put($session_data);
         $uuid = Uuid::uuid4();
-        Cache::put('sess'.$uuid, $request->session()->getId(), 300);
+        $request->session()->put('uuid-'.$uuid, $session_data);
+        session(['lti_session_exists' => true]);
 
-        return redirect('/lti_check?id='.$uuid);
+        return redirect('/app/'.$uuid->toString());
     }
 
     public function getJWKS()
@@ -49,47 +48,5 @@ class LtiController extends Controller
     public function ltiHelp()
     {
         return view('lti_help');
-    }
-
-    /**
-     * Handle being loaded in an iframe, which some browsers won't store a cookie for
-     * by opening a new window outside of the iframe where the session actually works.
-     */
-    // FIXME: Are launchCheck() and launchRedirect() still needed with newer versions of Celtic-LTI?
-    //        Seems to be being handled there now.
-    public function launchCheck(Request $request)
-    {
-        if ($request->session()->get('lti_session_exists')) {
-            return redirect('/app');
-        }
-
-        $id = $request->get('id');
-        return <<<TAG
-<html><head>
-<script>
-function deactivate() {
-   document.getElementById('link_div').style.display = 'none';
-   document.getElementById('message_div').style.display = 'block';
-}
-setTimeout(deactivate, 4 * 60 * 1000);
-</script>
-</head><body>
-<div id="link_div" style='text-align:center;font-family:sans-serif;font-size:200%;'>
-<a href="/lti_redirect?id=$id" target="_blank">Click here</a> to load this tool.
-</div>
-<div id='message_div' style='text-align:center;font-family:sans-serif;font-size:200%;display:none;'>
-Please reload this page in your LMS to launch this tool.
-</div>
-</body></html>
-TAG;
-    }
-
-    public function launchRedirect(Request $request)
-    {
-        $uuid = $request->get('id');
-        $session_id = Cache::get('sess'.$uuid);
-        $request->session()->setId($session_id);
-        $request->session()->start();
-        return redirect('/app');
     }
 }

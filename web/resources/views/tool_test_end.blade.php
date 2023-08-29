@@ -4,7 +4,7 @@
 
     <h2>Testing your survey</h2>
 
-    <p><a href="/app" class="body_link"><<< back to editing survey</a></p>
+    <p><a href="/app/{{$uuid}}" class="body_link"><<< back to editing survey</a></p>
 
     <p>
         <span style="background-color: lightgreen;border:solid 1px green;border-radius:5px;padding:5px;">✔️OK!</span>

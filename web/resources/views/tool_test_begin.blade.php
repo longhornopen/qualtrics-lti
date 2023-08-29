@@ -4,7 +4,7 @@
 
     <h2>Testing your survey</h2>
 
-    <p><a href="/app" class="body_link"><<< back to editing survey</a></p>
+    <p><a href="/app/{{$uuid}}" class="body_link"><<< back to editing survey</a></p>
 
     <p>
         We're about to test your survey.  You'll be given a chance to take your survey as your students would see it.

@@ -23,17 +23,15 @@ Route::get('/', function () {
 Route::post('/lti', [LtiController::class, 'ltiMessage']);
 Route::get('/lti/help', [LtiController::class, 'ltiHelp']);
 Route::get('/lti/jwks', [LtiController::class, 'getJWKS']);
-Route::get('/lti_check', [LtiController::class, 'launchCheck']);
-Route::get('/lti_redirect', [LtiController::class, 'launchRedirect']);
 
 Route::middleware([CheckLtiLogin::class])->group(function () {
-    Route::get('/app', [AppController::class, 'getTool']);
-    Route::post('/app/config', [AppController::class, 'postToolConfig']);
-    Route::get('/app/response', [AppController::class, 'getToolResponse']);
-    Route::post('/app/resend_grade', [AppController::class, 'postResendGrade']);
-    Route::get('/app/test_begin', [AppController::class, 'getTestBegin']);
-    Route::get('/app/test_end', [AppController::class, 'getTestEnd']);
-    Route::get('/app/exportCSV', [AppController::class, 'getCsvExport']);
+    Route::get('/app/{uuid}', [AppController::class, 'getTool']);
+    Route::post('/app/{uuid}/config', [AppController::class, 'postToolConfig']);
+    Route::get('/app/{uuid}/response', [AppController::class, 'getToolResponse']);
+    Route::post('/app/{uuid}/resend_grade', [AppController::class, 'postResendGrade']);
+    Route::get('/app/{uuid}/test_begin', [AppController::class, 'getTestBegin']);
+    Route::get('/app/{uuid}/test_end', [AppController::class, 'getTestEnd']);
+    Route::get('/app/{uuid}/exportCSV', [AppController::class, 'getCsvExport']);
 });
 
 // Test survey which behaves similarly to a Qualtrics survey, for testing without Qualtrics

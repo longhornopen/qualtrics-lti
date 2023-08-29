@@ -61,7 +61,7 @@
         </div>
         <div class="col-md-12" style="margin-bottom: 1rem;">
             <hr>
-            <form method="post" action="/app/config">
+            <form method="post" action="/app/{{$uuid}}/config">
                 {{@csrf_field()}}
                 <div style="margin-bottom: 1rem;">
                     <label for="qualtrics_url" style="font-size:1.35rem;">Qualtrics Survey URL</label>
@@ -88,7 +88,7 @@
             <hr>
             <h3>Test Survey</h3>
             <p>
-                After saving the configuration above, <a href="/app/test_begin" class="body_link">test your survey</a> and make sure it's set up correctly.
+                After saving the configuration above, <a href="/app/{{$uuid}}/test_begin" class="body_link">test your survey</a> and make sure it's set up correctly.
             </p>
         </div>
     </div>
@@ -116,7 +116,7 @@
                                 </span>
                             @endif</td>
                         <td>
-                            @if (!$resp->date_outcome_reported && $resp->score!==null) <form method="post" action="/app/resend_grade">
+                            @if (!$resp->date_outcome_reported && $resp->score!==null) <form method="post" action="/app/{{$uuid}}/resend_grade">
                                 {{ @csrf_field() }}
                                 <input type="hidden" name="response_id" value="{{$resp->id}}">
                                 <button type="submit" class="btn btn-secondary">Update grade</button>
@@ -126,7 +126,7 @@
                 @endforeach
             </table>
 
-            <a class="btn btn-primary" role="button" href="/app/exportCSV">Download CSV</a>
+            <a class="btn btn-primary" role="button" href="/app/{{$uuid}}/exportCSV">Download CSV</a>
 
         </div>
     </div>

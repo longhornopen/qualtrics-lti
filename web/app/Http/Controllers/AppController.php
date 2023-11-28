@@ -34,6 +34,7 @@ class AppController extends Controller
 
         if ($session_data['lti_is_teacher']) {
             return view('tool_teacher', [
+                'session_data' => $session_data,
                 'assignment' => $assignment,
                 'assignment_responses' => AssignmentResponse::where('assignment_id', $assignment->id)->get(),
                 'uuid' => $uuid,
@@ -54,20 +55,27 @@ class AppController extends Controller
             $sep = "?";
         }
         $full_qualtrics_url = $assignment->qualtrics_url . $sep . "return_url=" . urlencode(request()->url() . "/response");
-        if (array_key_exists('lti_person_sourcedid', $session_data)) {
-            $full_qualtrics_url .= "&sis_user_id=" . $session_data['lti_person_sourcedid'];
-        }
-
-        # Add user email to URL
-        if (array_key_exists('lti_user_email', $session_data)) {
-            $full_qualtrics_url .= "&user_email=" . urlencode($session_data['lti_user_email']);
-        }
+        $full_qualtrics_url = $this->decorateFullQualticsUrlWithShareData($full_qualtrics_url, $assignment, $session_data);
 
         return view('tool_student', [
             'assignment' => $assignment,
             'assignment_response' => $assignment_response,
             'full_qualtrics_url' => $full_qualtrics_url,
         ]);
+    }
+
+    protected function decorateFullQualticsUrlWithShareData($full_qualtrics_url, $assignment, $session_data)
+    {
+        if ($assignment->shouldSendPersonalData('sis_user_id') && array_key_exists('lti_person_sourcedid', $session_data)) {
+            $full_qualtrics_url .= "&sis_user_id=" . urlencode($session_data['lti_person_sourcedid']);
+        }
+        if ($assignment->shouldSendPersonalData('user_email') && array_key_exists('lti_user_email', $session_data)) {
+            $full_qualtrics_url .= "&user_email=" . urlencode($session_data['lti_user_email']);
+        }
+        if ($assignment->shouldSendPersonalData('user_id') && array_key_exists('lti_user_id', $session_data)) {
+            $full_qualtrics_url .= "&user_id=" . urlencode($session_data['lti_user_id']);
+        }
+        return $full_qualtrics_url;
     }
 
     public function getToolResponse($uuid)
@@ -126,11 +134,14 @@ class AppController extends Controller
             'qualtrics_url' => 'required|url'
         ]);
 
+        $share_data = request()->get('share_data') ?? [];
+
         $assignment = Assignment::where('resource_link_dbid', $session_data['lti_resource_link_dbid'])
             ->firstOrFail();
         $assignment->qualtrics_url = request()->get('qualtrics_url');
         $assignment->intro_text = request()->get('intro_text');
         $assignment->finish_text = request()->get('finish_text');
+        $assignment->share_data = implode(",", $share_data);
         $assignment->save();
 
         return redirect('/app/'.$uuid)->with('success_msg', "Successfully updated.");
@@ -170,6 +181,8 @@ class AppController extends Controller
 
     public function getCsvExport($uuid)
     {
+        $lti_tool = LtiTool::getLtiTool();
+
         $session_data = session('uuid-' . $uuid);
         if (!$session_data) {
             return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
@@ -189,9 +202,16 @@ class AppController extends Controller
 
         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-        $csv->insertOne(['gradeReported', 'score', 'userName', 'userEmail']);
+        $csv->insertOne(['gradeReported', 'score', 'userName', 'userEmail', 'user_lti_id']);
         foreach ($assignment_responses as $assignment_response) {
-            $csv->insertOne([$assignment_response->date_outcome_reported, $assignment_response->score, $assignment_response->user_name, $assignment_response->user_email]);
+            $user_result = $lti_tool->getUserResultById($assignment_response->user_result_id);
+            $csv->insertOne([
+                $assignment_response->date_outcome_reported,
+                $assignment_response->score,
+                $assignment_response->user_name,
+                $assignment_response->user_email,
+                $user_result->ltiUserId ?? '',
+            ]);
         }
 
         $file_name1 = $assignment->id;
@@ -214,6 +234,7 @@ class AppController extends Controller
         }
         $response_url = str_replace('/test_begin', '/test_end', request()->url());
         $full_qualtrics_url = $assignment->qualtrics_url . $sep . "return_url=" . urlencode($response_url);
+        $full_qualtrics_url = $this->decorateFullQualticsUrlWithShareData($full_qualtrics_url, $assignment, $session_data);
 
         return view('tool_test_begin', [
             'assignment' => $assignment,

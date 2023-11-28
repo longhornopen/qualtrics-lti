@@ -28,6 +28,7 @@ class LtiController extends Controller
             $session_data['lti_resource_link_dbid'] = $tool->resourceLink->getRecordId();
             $session_data['lti_context_dbid'] = $tool->context->getRecordId();
             $session_data['lti_person_sourcedid'] = $tool->userResult->sourcedId;
+            $session_data['lti_user_id'] = $tool->userResult->ltiUserId;
             $session_data['lti_is_teacher'] = $isTeacher;
         }
 

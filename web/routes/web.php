@@ -34,6 +34,8 @@ Route::middleware([CheckLtiLogin::class])->group(function () {
     Route::get('/app/{uuid}/exportCSV', [AppController::class, 'getCsvExport']);
 });
 
+Route::get('/docs/student_data_capture', function() { return view('docs/student_data_capture'); });
+
 // Test survey which behaves similarly to a Qualtrics survey, for testing without Qualtrics
 Route::get('/test/survey', function() { return view('dev/test_survey'); });
 

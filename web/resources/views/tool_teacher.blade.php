@@ -78,13 +78,56 @@
                     <small class="form-text">The text your students will see at the end of the survey.</small>
                     <textarea class="form-control tinymce" id="finish_text" name="finish_text">{{ old('finish_text', $assignment->finish_text) }}</textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <div style="margin-bottom: 1rem;">
+                    <div style="font-size:1.35rem;">Options</div>
+                    <div style="margin-left:1em;">
+                        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            > share student data with Qualtrics
+                        </a>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <p>You can choose to share the following student data with Qualtrics so that you can capture it as part of your survey.  See <a href="/docs/student_data_capture" style="text-decoration:underline" target="_blank">the documentation</a> to learn how to set up the survey to do that.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="share_data[]" value="user_email"
+                                           @if ($assignment->shouldSendPersonalData('user_email'))
+                                               checked
+                                           @endif
+                                           id="share_data_user_email">
+                                    <label class="form-check-label" for="share_data_user_email">
+                                        user_email (example: {{$session_data['lti_user_email']??'unknown'}})
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="share_data[]" value="sis_user_id"
+                                           @if ($assignment->shouldSendPersonalData('sis_user_id'))
+                                               checked
+                                           @endif
+                                           id="share_data_sis_user_id">
+                                    <label class="form-check-label" for="share_data_sis_user_id">
+                                        sis_user_id (example: {{$session_data['lti_person_sourcedid']??'unknown'}})
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="share_data[]" value="user_id"
+                                           @if ($assignment->shouldSendPersonalData('user_id'))
+                                               checked
+                                           @endif
+                                           id="share_data_user_id">
+                                    <label class="form-check-label" for="share_data_user_id">
+                                        user_id (example: {{$session_data['lti_user_id']??'unknown'}})
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Configuration</button>
             </form>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="margin-top:2em;">
             <hr>
             <h3>Test Survey</h3>
             <p>
@@ -94,7 +137,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="margin-top:2em;">
             <hr>
 
             <h3>Responses</h3>

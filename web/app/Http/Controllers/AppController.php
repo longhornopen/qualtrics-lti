@@ -21,7 +21,7 @@ class AppController extends Controller
     {
         $session_data = session('uuid-' . $uuid);
         if (!$session_data) {
-            return response("<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>");
+            return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
         }
 
         $assignment = Assignment::firstOrCreate([
@@ -74,14 +74,14 @@ class AppController extends Controller
     {
         $session_data = session('uuid-' . $uuid);
         if (!$session_data) {
-            return response("<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>");
+            return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
         }
 
         if (!request()->has('Score')) {
-            return "ERROR: 'Score' parameter is missing on return URL.";
+            return view('error', ['message'=>"ERROR: 'Score' parameter is missing on return URL."]);
         }
         if (!request()->has('MaxScore')) {
-            return "ERROR: 'MaxScore' parameter is missing on return URL.";
+            return view('error', ['message'=>"ERROR: 'MaxScore' parameter is missing on return URL."]);
         }
 
         $grade = (float)request()->get('Score') / (float)request()->get('MaxScore');
@@ -102,7 +102,7 @@ class AppController extends Controller
             $outcome = new LTI\Outcome($grade);
             $ok = $resourceLink->doOutcomesService(LTI\Enum\ServiceAction::Write, $outcome, $user_result);
             if (!$ok) {
-                return "<html><body><h3>ERROR: Unable to save grade.  Please notify your instructor.</h3></body></html>";
+                return view('error', ['message'=>"ERROR: Unable to save grade.  Please try again later, or notify your instructor."]);
             }
             $assignment_response->date_outcome_reported = new Carbon();
             $assignment_response->save();
@@ -115,7 +115,7 @@ class AppController extends Controller
     {
         $session_data = session('uuid-' . $uuid);
         if (!$session_data) {
-            return response("<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>");
+            return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
         }
 
         if (!$session_data['lti_is_teacher']) {
@@ -140,7 +140,7 @@ class AppController extends Controller
     {
         $session_data = session('uuid-' . $uuid);
         if (!$session_data) {
-            return response("<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>");
+            return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
         }
 
         if (!$session_data['lti_is_teacher']) {
@@ -158,7 +158,7 @@ class AppController extends Controller
             $outcome = new LTI\Outcome($grade);
             $ok = $resourceLink->doOutcomesService(LTI\Enum\ServiceAction::Write, $outcome, $user_result);
             if (!$ok) {
-                return "<html><body><h3>ERROR: Unable to save grade.  Please try again later, or notify your administrator.</h3></body></html>";
+                return view('error', ['message'=>"ERROR: Unable to save grade.  Please try again later, or notify your administrator."]);
             }
         }
 
@@ -172,7 +172,7 @@ class AppController extends Controller
     {
         $session_data = session('uuid-' . $uuid);
         if (!$session_data) {
-            return response("<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>");
+            return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
         }
 
         $assignment = Assignment::where('resource_link_dbid', $session_data['lti_resource_link_dbid'])
@@ -203,13 +203,13 @@ class AppController extends Controller
     {
         $session_data = session('uuid-' . $uuid);
         if (!$session_data) {
-            return response("<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>");
+            return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
         }
 
         $assignment = Assignment::where('resource_link_dbid', $session_data['lti_resource_link_dbid'])
             ->firstOrFail();
         $sep = "&";
-        if (strpos($assignment->qualtrics_url, "?") === FALSE) {
+        if (!str_contains($assignment->qualtrics_url, "?")) {
             $sep = "?";
         }
         $response_url = str_replace('/test_begin', '/test_end', request()->url());
@@ -226,7 +226,7 @@ class AppController extends Controller
     {
         $session_data = session('uuid-' . $uuid);
         if (!$session_data) {
-            return response("<html><body><h3>Sorry, your session has expired.  Please relaunch this tool through your LMS.</h3></body></html>");
+            return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
         }
 
         $assignment = Assignment::where('resource_link_dbid', $session_data['lti_resource_link_dbid'])

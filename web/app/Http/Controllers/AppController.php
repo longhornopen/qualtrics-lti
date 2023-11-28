@@ -54,9 +54,13 @@ class AppController extends Controller
             $sep = "?";
         }
         $full_qualtrics_url = $assignment->qualtrics_url . $sep . "return_url=" . urlencode(request()->url() . "/response");
-        $share_user = array_key_exists('lti_person_sourcedid', $session_data);
-        if ($share_user) {
+        if (array_key_exists('lti_person_sourcedid', $session_data)) {
             $full_qualtrics_url .= "&sis_user_id=" . $session_data['lti_person_sourcedid'];
+        }
+
+        # Add user email to URL
+        if (array_key_exists('lti_user_email', $session_data)) {
+            $full_qualtrics_url .= "&user_email=" . urlencode($session_data['lti_user_email']);
         }
 
         return view('tool_student', [

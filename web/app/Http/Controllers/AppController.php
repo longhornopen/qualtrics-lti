@@ -100,7 +100,7 @@ class AppController extends Controller
         if ($resourceLink->hasOutcomesService()) {
             $user_result = $lti_tool->getUserResultById($session_data['lti_user_result_dbid']);
             $outcome = new LTI\Outcome($grade);
-            $ok = $resourceLink->doOutcomesService(LTI\ResourceLink::EXT_WRITE, $outcome, $user_result);
+            $ok = $resourceLink->doOutcomesService(LTI\Enum\ServiceAction::Write, $outcome, $user_result);
             if (!$ok) {
                 return "<html><body><h3>ERROR: Unable to save grade.  Please notify your instructor.</h3></body></html>";
             }
@@ -156,7 +156,7 @@ class AppController extends Controller
         if ($resourceLink->hasOutcomesService()) {
             $user_result = $lti_tool->getUserResultById($assignment_response->user_result_id);
             $outcome = new LTI\Outcome($grade);
-            $ok = $resourceLink->doOutcomesService(LTI\ResourceLink::EXT_WRITE, $outcome, $user_result);
+            $ok = $resourceLink->doOutcomesService(LTI\Enum\ServiceAction::Write, $outcome, $user_result);
             if (!$ok) {
                 return "<html><body><h3>ERROR: Unable to save grade.  Please try again later, or notify your administrator.</h3></body></html>";
             }

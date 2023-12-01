@@ -74,9 +74,10 @@
                     <ol>
                         <li>Edit your survey and click 'Survey Flow'.</li>
                         <li>Add a new 'End of Survey' element</li>
-                        <li>Click 'Customize'</li>
+                        <li>Click 'Customize', and make sure 'Override Survey Options' is checked.</li>
                         <li>Select 'Redirect to a URL'.</li>
                         <li>For the URL, enter <pre>${e://Field/return_url}?Score=100&MaxScore=100</pre></li>
+                        <li>Remember to click 'Publish' (under the 'Builder' icon on the left) to publish your survey.</li>
                     </ol>
                     </p>
                     <p class="card-text">
@@ -90,8 +91,9 @@
                         <li>Click 'Set a Value Now'.</li>
                         <li>Choose 'Insert Piped Text' > 'Scoring' and select your scoring category.</li>
                         <li>Still in the 'Survey Flow' screen, click add a new 'End of Survey' element.</li>
-                        <li>Click 'Customize'.</li>
+                        <li>Click 'Customize', and make sure 'Override Survey Options' is checked.</li>
                         <li>Select 'Redirect to a URL'.  For the URL, enter <pre>${e://Field/return_url}?Score=${e://Field/score}&MaxScore=100</pre></li>
+                        <li>Remember to click 'Publish' (under the 'Builder' icon on the left) to publish your survey.</li>
                     </ol>
                     *The above assumes that a perfect score is 100 points.  If your survey is different, change the '100' on the end of the URL to your maximum possible score.
                     </p>

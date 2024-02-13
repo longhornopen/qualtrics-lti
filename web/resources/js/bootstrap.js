@@ -35,13 +35,13 @@ try {
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     key: process.env.VITE_PUSHER_APP_KEY,
+//     cluster: process.env.VITE_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
 
-
-window.tinymce = require('tinymce/tinymce');
-require('tinymce/icons/default');
-require('tinymce/icons/default');
+import tinymce from 'tinymce/tinymce';
+window.tinymce = tinymce;
+import 'tinymce/icons/default';
+import 'tinymce/icons/default';
 

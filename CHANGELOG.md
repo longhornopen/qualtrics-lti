@@ -4,6 +4,7 @@
 * No user-facing changes
 * Replace Webpack with Vite
 * Update PHP minimum requirement to 8.2
+* Update Bootstrap from 4 to 5.  (Check your custom CSS, if you're applying any.)
 
 # 2022-09-16
 

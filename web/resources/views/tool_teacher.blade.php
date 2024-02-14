@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head_extras')
+<script src="/build/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+@endsection
+
 @section('content')
 
     <script>

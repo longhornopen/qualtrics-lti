@@ -15,11 +15,7 @@ export default defineConfig({
         ]),
         viteStaticCopy({
             targets: [
-                { src: 'node_modules/tinymce/icons', dest: 'tinymce'},
-                { src: 'node_modules/tinymce/models', dest: 'tinymce'},
-                { src: 'node_modules/tinymce/plugins', dest: 'tinymce'},
-                { src: 'node_modules/tinymce/skins', dest: 'tinymce'},
-                { src: 'node_modules/tinymce/themes', dest: 'tinymce'},
+                { src: 'node_modules/tinymce', dest: '.'},
             ],
             verbose: true,
         }),

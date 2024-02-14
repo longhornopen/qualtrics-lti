@@ -7,6 +7,8 @@
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="/custom/custom.css">
+
+    @yield('head_extras')
 </head>
 <body>
 

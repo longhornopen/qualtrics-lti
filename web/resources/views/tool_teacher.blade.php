@@ -4,31 +4,34 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            tinymce.baseURL = "/build/tinymce";
             tinymce.init({
                 selector: '#intro_text',
                 height: 200,
                 plugins: [
-                    'advlist autolink lists link image charmap anchor',
-                    'searchreplace visualblocks',
-                    'media table',
+                    'advlist','autolink','lists','link','image','charmap','anchor',
+                    'searchreplace','visualblocks',
+                    'media','table',
                     'help'
                 ],
                 help_tabs: ['shortcuts', 'keyboardnav'],
                 toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                branding: false
+                branding: false,
+                promotion: false
             });
             tinymce.init({
                 selector: '#finish_text',
                 height: 200,
                 plugins: [
-                    'advlist autolink lists link image charmap anchor',
-                    'searchreplace visualblocks',
-                    'media table paste',
+                    'advlist','autolink','lists','link','image','charmap','anchor',
+                    'searchreplace','visualblocks',
+                    'media','table',
                     'help'
                 ],
                 help_tabs: ['shortcuts', 'keyboardnav'],
                 toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                branding: false
+                branding: false,
+                promotion: false
             });
         });
     </script>

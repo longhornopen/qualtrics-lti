@@ -4,13 +4,13 @@ WORKDIR /var/www/html
 RUN composer install --ignore-platform-reqs --no-dev
 
 
-FROM node:13 as npmbuild
+FROM node:20 as npmbuild
 COPY --from=phpbuild /var/www/html /var/www/html
 WORKDIR /var/www/html
 RUN npm ci && npm run production && rm -rf /var/www/html/node_modules
 
 
-FROM php:8.1-apache
+FROM php:8.2-apache
 # enable rewrite for Laravel pretty URLs
 RUN a2enmod rewrite
 # change apache webroot from / to /public/

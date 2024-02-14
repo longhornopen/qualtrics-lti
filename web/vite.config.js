@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
     resolve: {
@@ -12,5 +13,15 @@ export default defineConfig({
             'resources/sass/app.scss',
             'resources/js/app.js',
         ]),
+        viteStaticCopy({
+            targets: [
+                { src: 'node_modules/tinymce/icons', dest: 'tinymce'},
+                { src: 'node_modules/tinymce/models', dest: 'tinymce'},
+                { src: 'node_modules/tinymce/plugins', dest: 'tinymce'},
+                { src: 'node_modules/tinymce/skins', dest: 'tinymce'},
+                { src: 'node_modules/tinymce/themes', dest: 'tinymce'},
+            ],
+            verbose: true,
+        }),
     ],
 });

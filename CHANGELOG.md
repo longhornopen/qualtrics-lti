@@ -1,4 +1,10 @@
 
+# 2023-02-xx
+
+* No user-facing changes
+* Replace Webpack with Vite
+* Update PHP minimum requirement to 8.2
+
 # 2022-09-16
 
 * Add LTI 1.3 support

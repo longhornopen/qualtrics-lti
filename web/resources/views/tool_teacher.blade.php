@@ -3,14 +3,14 @@
 @section('content')
 
     <script>
-        $(document).ready(function() {
+        document.addEventListener('DOMContentLoaded', function() {
             tinymce.init({
                 selector: '#intro_text',
                 height: 200,
                 plugins: [
                     'advlist autolink lists link image charmap anchor',
                     'searchreplace visualblocks',
-                    'media table paste',
+                    'media table',
                     'help'
                 ],
                 help_tabs: ['shortcuts', 'keyboardnav'],

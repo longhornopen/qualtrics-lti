@@ -5,7 +5,7 @@
 
     <title>Qualtrics LTI Tool</title>
 
-    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
 

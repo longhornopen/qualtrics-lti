@@ -1,34 +1,37 @@
 @extends('layouts.app')
 
+@section('head_extras')
+<script src="/build/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+@endsection
+
 @section('content')
 
     <script>
-        $(document).ready(function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            tinymce.baseURL = "/build/tinymce";
             tinymce.init({
                 selector: '#intro_text',
                 height: 200,
                 plugins: [
-                    'advlist autolink lists link image charmap anchor',
-                    'searchreplace visualblocks',
-                    'media table paste',
-                    'help'
+                    'advlist','autolink','lists','link','image','charmap','anchor',
+                    'searchreplace','visualblocks',
+                    'media','table'
                 ],
-                help_tabs: ['shortcuts', 'keyboardnav'],
                 toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                branding: false
+                branding: false,
+                promotion: false
             });
             tinymce.init({
                 selector: '#finish_text',
                 height: 200,
                 plugins: [
-                    'advlist autolink lists link image charmap anchor',
-                    'searchreplace visualblocks',
-                    'media table paste',
-                    'help'
+                    'advlist','autolink','lists','link','image','charmap','anchor',
+                    'searchreplace','visualblocks',
+                    'media','table'
                 ],
-                help_tabs: ['shortcuts', 'keyboardnav'],
                 toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                branding: false
+                branding: false,
+                promotion: false
             });
         });
     </script>
@@ -52,36 +55,36 @@
     @endif
 
     <div class="row">
-        <div class="col-md-12" style="margin-bottom: 1rem;">
+        <div class="col-12" style="margin-bottom: 1rem;">
             <ul>
                 <li>If you haven't already, <a href="/" target="_blank" class="body_link">set up your survey according to the instructions.</a></li>
                 <li>Be sure your survey only uses accessible question types. For a list of accessible question types along with more information about survey accessibility, please <a href="https://www.qualtrics.com/support/survey-platform/survey-module/survey-tools/check-survey-accessibility/#QuestionTypeAccessibility" target="_blank" class="body_link">see the Qualtrics Survey Accessibility guide.</a></li>
                 <li>Once you've set up your survey, test it using the 'Test Survey' link below.</li>
             </ul>
         </div>
-        <div class="col-md-12" style="margin-bottom: 1rem;">
+        <div class="col-12" style="margin-bottom: 1rem;">
             <hr>
             <form method="post" action="/app/{{$uuid}}/config">
-                {{@csrf_field()}}
+                @csrf
                 <div style="margin-bottom: 1rem;">
                     <label for="qualtrics_url" style="font-size:1.35rem;">Qualtrics Survey URL</label>
-                    <small class="form-text">In Qualtrics, this is under the 'Distributions' menu item.  Click 'Distribute Survey', then 'Web', then 'Use Anonymous Link'.</small>
+                    <div class="form-text">In Qualtrics, this is under the 'Distributions' menu item.  Click 'Distribute Survey', then 'Web', then 'Use Anonymous Link'.</div>
                     <input type="text" class="form-control" id="qualtrics_url" name="qualtrics_url" value="{{ old('qualtrics_url', $assignment->qualtrics_url) }}">
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label for="intro_text" style="font-size:1.35rem;">Intro text</label>
-                    <small class="form-text">The text your students will see at the beginning of the survey.</small>
+                    <div class="form-text">The text your students will see at the beginning of the survey.</div>
                     <textarea class="form-control" id="intro_text" name="intro_text">{{ old('intro_text', $assignment->intro_text) }}</textarea>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label for="finish_text" style="font-size:1.35rem;">Finished text</label>
-                    <small class="form-text">The text your students will see at the end of the survey.</small>
+                    <div class="form-text">The text your students will see at the end of the survey.</div>
                     <textarea class="form-control tinymce" id="finish_text" name="finish_text">{{ old('finish_text', $assignment->finish_text) }}</textarea>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <div style="font-size:1.35rem;">Options</div>
                     <div style="margin-left:1em;">
-                        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                             > share student data with Qualtrics
                         </a>
                         <div class="collapse" id="collapseExample">
@@ -127,7 +130,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12" style="margin-top:2em;">
+        <div class="col-12" style="margin-top:2em;">
             <hr>
             <h3>Test Survey</h3>
             <p>
@@ -137,7 +140,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12" style="margin-top:2em;">
+        <div class="col-12" style="margin-top:2em;">
             <hr>
 
             <h3>Responses</h3>

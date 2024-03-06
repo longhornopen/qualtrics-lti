@@ -5,12 +5,10 @@
 
     <title>Qualtrics LTI Tool</title>
 
-    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="/custom/custom.css">
 
-    <script src="{{ asset('/js/manifest.js') }}"></script>
-    <script src="{{ asset('/js/vendor.js') }}"></script>
-    <script src="{{ asset('/js/app.js') }}"></script>
+    @yield('head_extras')
 </head>
 <body>
 

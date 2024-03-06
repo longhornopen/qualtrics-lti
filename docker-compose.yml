@@ -10,14 +10,15 @@ services:
       DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: 3306
-      DB_DATABASE: laravel
-      DB_USERNAME: root
-      DB_PASSWORD: root
+      DB_DATABASE: qualtrics-lti
+      DB_USERNAME: qualtrics-lti
+      DB_PASSWORD: qualtrics-lti
       LOG_CHANNEL: errorlog
       LOG_LEVEL: debug
       SESSION_DRIVER: file
       LTI13_RSA_PUBLIC_KEY: ${LTI13_RSA_PUBLIC_KEY}
       LTI13_RSA_PRIVATE_KEY: ${LTI13_RSA_PRIVATE_KEY}
+      VIEW_COMPILED_PATH: /tmp/laravelviews
     links:
       - "mysql:mysql"
     ports:
@@ -25,8 +26,10 @@ services:
   mysql:
     image: mysql:8
     environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: qualtrics-lti
+      MYSQL_ROOT_PASSWORD: qualtrics-lti
+      MYSQL_USER: qualtrics-lti
+      MYSQL_PASSWORD: qualtrics-lti
     ports:
       - '${DB_EXPOSED_PORT:-3306}:3306'
     volumes:

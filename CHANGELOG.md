@@ -1,3 +1,7 @@
+# 2024-12-09
+
+* No user-facing changes
+* Update PHP/JS dependencies to latest
 
 # 2024-04-09
 

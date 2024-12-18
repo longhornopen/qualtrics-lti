@@ -5,7 +5,7 @@
     Launch as:<br>
     <select name="is_teacher">
         <option value="true">Teacher</option>
-        <option value="false" disabled="disabled">Student</option>
+        <option value="false">Student</option>
     </select>
 
     <br><br>

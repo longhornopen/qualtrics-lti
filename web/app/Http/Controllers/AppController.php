@@ -272,13 +272,34 @@ class AppController extends Controller
     public function postDevModeLaunch(Request $request)
     {
         $session_data = [];
-        $session_data['lti_is_teacher'] = $request->get('is_teacher');
+        $session_data['lti_is_teacher'] = $request->get('is_teacher')==='true';
         $session_data['lti_resource_link_dbid'] = $request->get('resource_link_dbid');
 
-        // FIXME: support student test launches later
-        //        $session_data['lti_user_result_dbid');
-        //        $session_data['lti_user_name');
-        //        $session_data['lti_user_email');
+        // create Assignment for this resource_link_dbid if it doesn't exist
+        $assignment = Assignment::firstOrCreate([
+            'resource_link_dbid' => $session_data['lti_resource_link_dbid'],
+        ], [
+            'qualtrics_url' => url("/test/survey"),
+            'intro_text' => "Welcome!  Please click below to begin your survey.",
+            'finish_text' => "Thank you for taking this survey!  Your response has been recorded.",
+        ]);
+
+        if ($session_data["lti_is_teacher"]) {
+            // great, done
+        } else {
+            // create an AssignmentResponse
+            $user_result_dbid = rand(100000, 999999); // FIXME create a real lti_user_result entry here; student launches currently have error at end otherwise
+            AssignmentResponse::firstOrCreate([
+                'assignment_id' => $assignment->id,
+                'user_result_id' => $user_result_dbid,
+            ], [
+                'user_name' => "A. Student",
+                'user_email' => "student@example.edu",
+            ]);
+            $session_data['lti_user_result_dbid'] = $user_result_dbid;
+            $session_data['lti_user_name'] = "A. Student";
+            $session_data['lti_user_email'] = "student@example.edu";
+        }
 
         $uuid = Uuid::uuid4();
         $request->session()->put('uuid-'.$uuid, $session_data);

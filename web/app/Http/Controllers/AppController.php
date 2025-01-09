@@ -28,8 +28,8 @@ class AppController extends Controller
             'resource_link_dbid' => $session_data['lti_resource_link_dbid'],
         ], [
             'qualtrics_url' => "",
-            'intro_text' => __('messages.intro_text'),
-            'finish_text' => __('messages.finish_text'),
+            'intro_text' => __('messages.default_intro_text'),
+            'finish_text' => __('messages.default_finish_text'),
         ]);
 
         if ($session_data['lti_is_teacher']) {

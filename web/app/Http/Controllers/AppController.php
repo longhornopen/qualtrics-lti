@@ -280,8 +280,8 @@ class AppController extends Controller
             'resource_link_dbid' => $session_data['lti_resource_link_dbid'],
         ], [
             'qualtrics_url' => url("/test/survey"),
-            'intro_text' => "Welcome!  Please click below to begin your survey.",
-            'finish_text' => "Thank you for taking this survey!  Your response has been recorded.",
+            'intro_text' => __('messages.default_intro_text'),
+            'finish_text' => __('messages.default_finish_text'),
         ]);
 
         if ($session_data["lti_is_teacher"]) {

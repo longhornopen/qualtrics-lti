@@ -5,7 +5,7 @@
 
     <title>Qualtrics LTI Tool</title>
 
-    <@vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="/custom/custom.css">
 </head>
 <body class="page_home">

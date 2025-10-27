@@ -1,3 +1,7 @@
+# 2025-10-27
+
+Minor user-facing text changes
+
 # 2024-12-09
 
 * No user-facing changes

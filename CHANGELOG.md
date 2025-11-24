@@ -1,3 +1,8 @@
+# 2025-11-10
+
+* Accessibility fixes
+* Fix Canvas issue in LTI 1.1  (Canvas now requires an explicit User-Agent for LTI 1.1 grade passbacks)
+
 # 2025-10-27
 
 Minor user-facing text changes

@@ -1,7 +1,8 @@
-# 2025-11-10
+# 2025-12-12
 
 * Accessibility fixes
 * Fix Canvas issue in LTI 1.1  (Canvas now requires an explicit User-Agent for LTI 1.1 grade passbacks)
+* Breaking change: `DATABASE_URL` environment variable is now `DB_URL`.
 
 # 2025-10-27
 

@@ -10,7 +10,7 @@
         "bootstrap": "^5.0.0",
         "laravel-vite-plugin": "^2.0.0",
         "sass": "^1.15.2",
-        "tinymce": "^6.0",
+        "tinymce": "^7.9",
         "vite": "^7.3.2",
         "vite-plugin-static-copy": "^3.1.4"
     },

@@ -24,36 +24,36 @@
         LTI 1.3 is the preferred method to register this tool with your LMS.
     </p>
     <div>
-    <p>
-        ➔ First, set up your RSA public and private keys.
-    </p>
-    @if (env('LTI13_RSA_PUBLIC_KEY') && env('LTI13_RSA_PRIVATE_KEY'))
-        <p style="border:solid 1px black; margin-left:20px; padding:10px;">
-            <span style="font-weight:bold;color:green;font-size:120%">✓</span> Congratulations, looks like you already did this!
+        <p>
+            ➔ First, set up your RSA public and private keys.
         </p>
-    @else
-        <p style="border:solid 1px black; margin-left:20px; padding:10px;">
-            The file at <code>config/lti.php</code> contains the RSA info you need to provide.  By default, they're read
-            from environment variables, which is preferred, but in a pinch you can hard-code values there.
-            <br><br>
-            Several web-based apps such as <a href="https://cryptotools.net/rsagen" class="body_link">https://cryptotools.net/rsagen</a>
-            can generate RSA keys for you, or you can do it from the command line.
-        </p>
-    @endif
+        @if (config('lti.lti13.rsa_private_key') && config('lti.lti13.rsa_public_key'))
+            <p style="border:solid 1px black; margin-left:20px; padding:10px;">
+                <span style="font-weight:bold;color:green;font-size:120%">✓</span> Congratulations, looks like you already did this!
+            </p>
+        @else
+            <p style="border:solid 1px black; margin-left:20px; padding:10px;">
+                The file at <code>config/lti.php</code> contains the RSA info you need to provide.  By default, they're read
+                from environment variables, which is preferred, but in a pinch you can hard-code values there.
+                <br><br>
+                Several web-based apps such as <a href="https://cryptotools.net/rsagen" class="body_link">https://cryptotools.net/rsagen</a>
+                can generate RSA keys for you, or you can do it from the command line.  Generate at least a 2048-bit key.
+            </p>
+        @endif
     </div>
     <div>
-    <p>
-        ➔ Register this tool with your LMS.  Instructions on how to do this are LMS-specific.
-    </p>
+        <p>
+            ➔ Register this tool with your LMS.  Instructions on how to do this are LMS-specific.
+        </p>
         <ul>
             <li>
                 Canvas LMS
                 <ul>
-                    <li><a href="https://community.canvaslms.com/t5/Admin-Guide/How-do-I-configure-an-LTI-key-for-an-account/ta-p/140" target="_blank" class="body_link">Add a new Developer Key</a>.</li>
+                    <li><a href="https://community.canvaslms.com/t5/Admin-Guide/How-do-I-configure-an-LTI-key-for-an-account/ta-p/140" target="_blank" class="body_link">Add a new Developer LTI Key</a>.</li>
                     <li>Under 'Method', choose 'Manual Entry'.
                         <ul>
-                            <li>For 'JWK Method', choose 'Public JWKS URL', with the value <code>{{env('APP_URL')}}/lti/jwks</code></li>
-                            <li>For all other URLs, use <code>{{env('APP_URL')}}/lti</code></li>
+                            <li>For 'JWK Method', choose 'Public JWKS URL', with the value <code>{{url('/lti/jwks')}}</code></li>
+                            <li>For all other URLs, use <code>{{url('/lti')}}</code></li>
                             <li>Under 'LTI Advantage Services', turn on "Can view submission data for assignments associated with the tool." and "Can create and update submission results for assignments associated with the tool."</li>
                             <li>Under 'Additional Settings', choose Privacy Level = 'Public'.</li>
                             <li>Under 'Placements', choose 'Assignment Selection'.</li>
@@ -71,8 +71,8 @@
                         We don't currently have detailed instructions for other LMSes.  (Please contact us if you
                         can help write them!)  You'll need to set up the following, though:
                         <ul>
-                            <li>JWKS URL: <code>{{env('APP_URL')}}/lti/jwks</code></li>
-                            <li>All other URLs: <code>{{env('APP_URL')}}/lti</code></li>
+                            <li>JWKS URL: <code>{{url('/lti/jwks')}}</code></li>
+                            <li>All other URLs: <code>{{url('/lti')}}</code></li>
                             <li>The Privacy level will need to allow reading student's names and submitting grades</li>
                             <li>LTI Advantage Services: the service to return grades to the LMS will need to be active</li>
                             <li>You'll need to get the app's Client ID, and the Deployment ID from an instance of the tool that you've deployed into a course.</li>
@@ -107,7 +107,7 @@
     <ul>
         <li><code>cd web</code></li>
         <li><code>php artisan lti:add_platform_1.2 my_lms_name my_consumer_key my_shared_secret</code></li>
-        <li>Install into LMS with launch URL: <code>{{env('APP_URL')}}/lti</code> and the consumer key/secret you created above.</li>
+        <li>Install into LMS with launch URL: <code>{{url('/lti')}}</code> and the consumer key/secret you created above.</li>
     </ul>
 </div>
 

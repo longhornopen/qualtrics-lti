@@ -54,7 +54,12 @@ class AppController extends Controller
         if (!str_contains($assignment->qualtrics_url, "?")) {
             $sep = "?";
         }
-        $full_qualtrics_url = $assignment->qualtrics_url . $sep . "return_url=" . urlencode(request()->url() . "/response");
+        // The return URL must be the same on every launch for this student and assignment.  Qualtrics'
+        // "Allow respondents to finish later" only resumes a partial response when the survey URL (query
+        // string included) is unchanged, so embedding this launch's session uuid would restart the survey
+        // every time the student relaunches the tool.
+        $return_url = url('/survey_return/' . $this->surveyReturnToken($session_data));
+        $full_qualtrics_url = $assignment->qualtrics_url . $sep . "return_url=" . urlencode($return_url);
         $full_qualtrics_url = $this->decorateFullQualticsUrlWithShareData($full_qualtrics_url, $assignment, $session_data);
 
         return view('tool_student', [
@@ -62,6 +67,39 @@ class AppController extends Controller
             'assignment_response' => $assignment_response,
             'full_qualtrics_url' => $full_qualtrics_url,
         ]);
+    }
+
+    // A token that identifies a student's attempt at an assignment, stable across LTI launches.
+    protected function surveyReturnToken($session_data)
+    {
+        return hash_hmac('sha256',
+            'survey_return|' . $session_data['lti_resource_link_dbid'] . '|' . $session_data['lti_user_result_dbid'],
+            config('app.key'));
+    }
+
+    // Qualtrics sends students here when they finish a survey.  Find this browser session's launch of
+    // the matching assignment (the most recent one, if the student launched more than once) and record
+    // the response against it.
+    public function getSurveyReturn($token)
+    {
+        $matching_uuid = null;
+        foreach (session()->all() as $key => $session_data) {
+            if (!str_starts_with($key, 'uuid-') || !is_array($session_data)) {
+                continue;
+            }
+            if (!empty($session_data['lti_is_teacher'])
+                || !isset($session_data['lti_resource_link_dbid'], $session_data['lti_user_result_dbid'])) {
+                continue;
+            }
+            if (hash_equals($this->surveyReturnToken($session_data), (string)$token)) {
+                $matching_uuid = substr($key, strlen('uuid-'));
+            }
+        }
+        if ($matching_uuid === null) {
+            return view('error', ['message'=>"Sorry, your session has expired.  Please relaunch this tool through your LMS."]);
+        }
+
+        return $this->getToolResponse($matching_uuid);
     }
 
     protected function decorateFullQualticsUrlWithShareData($full_qualtrics_url, $assignment, $session_data)

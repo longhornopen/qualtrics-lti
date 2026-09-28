@@ -28,6 +28,7 @@ Route::middleware([CheckLtiLogin::class])->group(function () {
     Route::get('/app/{uuid}', [AppController::class, 'getTool']);
     Route::post('/app/{uuid}/config', [AppController::class, 'postToolConfig']);
     Route::get('/app/{uuid}/response', [AppController::class, 'getToolResponse']);
+    Route::get('/survey_return/{token}', [AppController::class, 'getSurveyReturn']);
     Route::post('/app/{uuid}/resend_grade', [AppController::class, 'postResendGrade']);
     Route::get('/app/{uuid}/test_begin', [AppController::class, 'getTestBegin']);
     Route::get('/app/{uuid}/test_end', [AppController::class, 'getTestEnd']);
